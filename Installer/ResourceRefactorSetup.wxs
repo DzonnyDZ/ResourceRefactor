@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Name='Power Toys for Visual Studio - Resource Refactoring Tool' Id='B5F6D97D-96DF-42b5-B2BD-0379B6AFAFE0'
+             Language='1033' Codepage='1252' Version='2.1.0' Manufacturer='Microsoft Corporation'
+             UpgradeCode='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
+
+        <Package Id='*'
+                 Keywords='Installer'
+                 Comments='Resource Refactoring Tool for Visual Studio 2005/8/10 allows developers to easily convert string literals in to resources.'
+                 Manufacturer='Microsoft Corporation'
+                 InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+        <Upgrade Id='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
+            <UpgradeVersion Minimum="2.1.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
+            <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="2.1.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+        </Upgrade>
+
+        <!--
+        These condition tags represent conditions that must be met for the installer to run. 
+        The LaunchConditions action in the InstallExecuteSequence causes the installer to check each condition.
+        -->
+
+        <Property Id="FRAMEWORK20MISSINGURL"><![CDATA[http://msdn.microsoft.com/netframework/downloads/updates]]></Property>
+
+        <Property Id='FRAMEWORK20'>
+            <RegistrySearch Id='Framework20Registry' Type='raw' Root='HKLM' Key='SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' Name='Install' />
+        </Property>
+
+        <Condition Message="ResourceRefactor requires .NET Framework 4.0 full, which is not present on the computer. You may download it from: [FRAMEWORK20MISSINGURL]">
+            FRAMEWORK20 = "#1"
+        </Condition>
+
+        <Condition Message="You need to be an administrator to install this product.">
+            Privileged
+        </Condition>
+
+        <Property Id="VS2005">
+            <RegistrySearch Id="VS2005Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0" Name="ApplicationID" />
+        </Property>
+
+        <Property Id="VS2008">
+            <RegistrySearch Id="VS2008Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0" Name="ApplicationID" />
+        </Property>
+
+        <Property Id="VS2010">
+            <RegistrySearch Id="VS2010Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\10.0" Name="ApplicationID" />
+        </Property>
+
+        <Property Id="BROWSERLOC">
+            <RegistrySearch Id='DefaultBrowser' Type='raw' Root='HKCR' Key='http\shell\open\command' />
+        </Property>
+
+        <Condition Message="Resource Refactoring Tool requires Visual Studio 2005/8/10, which is not present on the computer.">
+            VS2005 = "VisualStudio" OR VS2008 = "VisualStudio" OR VS2010 = "VisualStudio"
+        </Condition>
+
+        <Media Id='1' Cabinet='ResourceRefactor.cab' EmbedCab='yes' />
+
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='AppDataFolder' Name='UserApp'>
+                <Directory Id='MicrosoftFolder' Name='Microsoft' >
+                    <Directory Id='MSEnvSharedFolder' Name='MSEnvShared' >
+                        <Directory Id='AddinsFolder' Name='Addins'>
+                            <Component Id='ResourceRefactoringAddin' Guid='38CA9324-C652-479a-B95A-B24318731091'>
+                                <File Id='ResourceRefactorAddinFile' Name='ResourceRefactor.AddIn' DiskId='1'
+                                      Source='$(var.Addin.TargetDir)\ResourceRefactor.AddIn' Vital='yes'>
+                                </File>
+
+                                <XmlFile xmlns='http://schemas.microsoft.com/wix/UtilExtension'
+                                         Id="Addin.Location"
+                                         File="[AddinsFolder]\ResourceRefactor.AddIn"
+                                         Action="setValue"
+                                         Value="[INSTALLDIR]\Microsoft.VSPowerToys.ResourceRefactor.dll"
+                                         ElementPath="//Extensibility/Addin/Assembly"
+                                         Sequence ="1"
+                                />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id='ProgramFilesFolder' Name='PFiles'>
+                <Directory Id='PowerToysFolder' Name='Power Toys for Visual Studio'>
+                    <Directory Id='INSTALLDIR' Name='Resource Refactoring Tool' src='$(var.Addin.TargetDir)'>
+                        <Component Id='ResourceRefactorCore' Guid='EFD35723-EEC4-455a-8341-185FA2865B87'>
+                            <File Id='File1' Name='Microsoft.VSPowerToys.ResourceRefactor.dll' DiskId='1'
+                                    Vital='yes'>
+                            </File>
+                            <File Id='File2' Name='ResourceRefactor.Common.CSharp.dll' DiskId='1' Vital='yes'>
+                            </File>
+                            <File Id='File3' Name='ResourceRefactor.Common.VB.dll' DiskId='1' Vital='yes' Source='$(var.CommonVB.TargetDir)ResourceRefactor.Common.VB.dll'>
+                            </File>
+                            <File Id='File4' Name='ResourceRefactor.UserInterface.dll' DiskId='1' Vital='yes' Source='$(var.UserInterface.TargetDir)ResourceRefactor.UserInterface.dll' >
+                            </File>
+                        </Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+
+            <Directory Id="ProgramMenuFolder" Name="Programs">
+                <Directory Id="ProgramMenuDir" Name="Power Toys for Visual Studio">
+                    <Directory Id="ProgramMenuSubDir" Name="Resource Refactoring Tool" />
+                </Directory>
+            </Directory>
+        </Directory>
+
+        <Feature Id='Complete'
+                 Title='Resource Refactoring Tool'
+                 Description='Resource Refactoring Tool for Visual Studio allows developers to easily convert string literals in to resources.'
+                 Display='expand'
+                 Level='1'
+                 ConfigurableDirectory='INSTALLDIR'
+        >
+            <ComponentRef Id='ResourceRefactorCore' />
+            <ComponentRef Id='ResourceRefactoringAddin' />
+        </Feature>
+
+        <!--The LaunchConditions conditional ensures we only check registry keys during install.-->
+        <CustomAction Id='NewerVersionError' Error="A newer version of Resource Refactoring Tool is already installed on the computer."/>
+
+        <InstallUISequence>
+            <LaunchConditions>NOT Installed</LaunchConditions>
+            <Custom Action="NewerVersionError" After="FindRelatedProducts">NEWVERSIONDETECTED</Custom>
+        </InstallUISequence>
+
+
+        <InstallExecuteSequence>
+            <LaunchConditions>NOT Installed</LaunchConditions>
+            <Custom Action="NewerVersionError" After="FindRelatedProducts">NEWVERSIONDETECTED</Custom>
+            <RemoveExistingProducts After="InstallInitialize"></RemoveExistingProducts>
+        </InstallExecuteSequence>
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>
+        <UIRef Id="WixUI_Common" />
+        <UIRef Id="WixUI_InstallDir" />
+        <UIRef Id="WixUI_ErrorProgressText" />
+
+        <!--Set properties for the Add/Remove Programs (ARP) entry.-->
+
+        <Property Id="ARPPRODUCTICON">arpicon.ico</Property>
+        <Icon Id="arpicon.ico" SourceFile="Bitmaps\powertoys.ico" />
+        <Property Id="ARPHELPLINK"><![CDATA[http://resourcerefactoring.codeplex.com/]]></Property>
+        <Property Id="ARPURLINFOABOUT"><![CDATA[http://resourcerefactoring.codeplex.com/]]></Property>
+        <Property Id="ARPCONTACT"><![CDATA[Microsoft Corporation]]></Property>
+        <Property Id="ARPCOMMENTS"><![CDATA[Resource Refactoring Tool for Visual Studio allows developers to easily convert string literals in to resources.]]></Property>
+
+    </Product>
+</Wix>

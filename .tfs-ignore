@@ -1,0 +1,13 @@
+<ignore xmlns='http://www.codeplex.com/schema/IgnoreListSchema-1.0.xsd'>
+    <add recursive='true'>bin</add>
+    <add recursive='true'>obj</add>
+    <add recursive='true'>_Resharper*</add>
+    <add recursive='true'>*.resharper</add>
+    <add recursive='true'>*.suo</add>
+    <add recursive='true'>*.user</add>
+    <add recursive='true'>*.msi</add>
+    <add recursive='true'>*.wixobj</add>
+    <add recursive='true'>*.wixpdb</add>
+    <add recursive='true'>*proj.user</add>
+    <add>*Settings.targets</add>
+</ignore>

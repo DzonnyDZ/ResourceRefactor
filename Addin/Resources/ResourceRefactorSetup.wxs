@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
+  <Product Name='Power Toys for Visual Studio - VSCmdShell' Id='1BE3EDC8-2DC3-4cb5-AAB8-ADA0FD5156C6'
+    Language='1033' Codepage='1252' Version='1.0.0' Manufacturer='Microsoft Corporation'>
+
+    <Package Id='????????-????-????-????-????????????' 
+      Keywords='Installer'
+      Comments='VSCmdShell is AddIn for Visual Studio 2005 that integrates a shell window in to Visual Studio 2005 IDE.'
+      Manufacturer='Microsoft Corporation'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+    <!--
+    These condition tags represent conditions that must be met for the installer to run. 
+    The LaunchConditions action in the InstallExecuteSequence causes the installer to check each condition.
+    -->
+
+    <Property Id="FRAMEWORK20MISSINGURL"><![CDATA[http://msdn.microsoft.com/netframework/downloads/updates]]></Property>
+
+    <Property Id='FRAMEWORK20'>
+      <RegistrySearch Id='Framework20Registry' Type='raw'
+        Root='HKLM' Key='Software\Microsoft\NET Framework Setup\NDP\v2.0.50727' Name='Install' />
+    </Property>
+
+    <Property Id='POWERSHELL'>
+      <RegistrySearch Id='PowerShellRegistry' Type='raw'
+        Root='HKLM' Key='Software\Microsoft\PowerShell\1\PowerShellEngine' Name='PowerShellVersion' />
+    </Property>
+
+    <Condition Message="VSCmdShell requires .NET Framework 2.0, which is not present on the computer. You may download it from: [FRAMEWORK20MISSINGURL]">
+      FRAMEWORK20 = "#1"
+    </Condition>
+
+    <Condition Message="You need to be an administrator to install this product.">
+      Privileged
+    </Condition>
+
+    <Property Id="VS2005">
+      <RegistrySearch Id="VS2005Registry" Type="raw"
+                      Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0" Name="ApplicationID" />
+    </Property>
+    
+    <Property Id="BROWSERLOC">
+      <RegistrySearch Id='DefaultBrowser' Type='raw'
+      Root='HKCR' Key='http\shell\open\command' />
+    </Property>
+    
+    <Condition Message="VSCmdShell requires Visual Studio 2005, which is not present on the computer.">
+      VS2005 = "VisualStudio"
+    </Condition>
+
+
+    <InstallExecuteSequence>
+      <LaunchConditions>NOT Installed</LaunchConditions>
+    </InstallExecuteSequence>
+
+    <Media Id='1' Cabinet='VSCmdShell.cab' EmbedCab='yes' />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='AppDataFolder' Name='UserApp'>
+        <Directory Id='MicrosoftFolder' Name='Microsof' LongName='Microsoft' >
+          <Directory Id='MSEnvSharedFolder' Name='MSEnv' LongName='MSEnvShared'>
+            <Directory Id='AddinsFolder' Name='Addins'>
+              <Component Id='VSCmdShellAddin' Guid='9EABBB05-87AF-4735-B41D-C631559AB189'>
+                <File Id='VSCmdShellAddinFile' Name='VSCmd.Add' LongName='VSCmdShell.AddIn' DiskId='1'
+                      src='VSCmdShell Bin\VSCmdShell.AddIn' Vital='yes'>
+                </File>
+
+                <XmlFile 
+							    Id="Addin.Location" 
+							    File="[AddinsFolder]\VSCmdShell.AddIn"
+							    Action="setValue" 
+							    Value="[INSTALLDIR]\Microsoft.VSPowerToys.VSCmdShell.dll"
+							    ElementPath="//Extensibility/Addin/Assembly"
+							    Sequence ="1" 
+                />
+                <XmlFile 
+							    Id="Addin.Options" 
+							    File="[AddinsFolder]\VSCmdShell.AddIn"
+							    Action="setValue" 
+							    Value="[INSTALLDIR]\Microsoft.VSPowerToys.VSCmdShell.dll"
+							    ElementPath="//Extensibility/ToolsOptionsPage/Category/SubCategory/Assembly"
+							    Sequence ="1" 
+                />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='PowerToysFolder' Name='powertoy' LongName='Power Toys for Visual Studio'>
+          <Directory Id='INSTALLDIR' Name='VSCmd' LongName='VSCmdShell'>
+            <Component Id='VSCmdShellCore' Guid='C9F50E1A-0742-41ee-9A68-8A7AFCAD8B65'>
+              <File Id='File1' Name='VSCmdSh.dll' LongName='Microsoft.VSPowerToys.VSCmdShell.dll' DiskId='1'
+                      src='VSCmdShell Bin\Microsoft.VSPowerToys.VSCmdShell.dll' Vital='yes'>
+              </File>
+              <File Id='File2' Name='VSCmdSh.con' LongName='Microsoft.VSPowerToys.VSCmdShell.dll.config' DiskId='1'
+                      src='VSCmdShell Bin\Microsoft.VSPowerToys.VSCmdShell.dll.config' Vital='yes'>
+              </File>
+              <File Id='File3' Name='Inter.dll' LongName='Microsoft.VSPowerToys.VSCmdShell.Interfaces.dll' DiskId='1'
+                      src='VSCmdShell Bin\Microsoft.VSPowerToys.VSCmdShell.Interfaces.dll' Vital='yes'>
+              </File>
+              <File Id='File4' Name='PSHost.dll' LongName='Microsoft.VSPowerToys.VSCmdShell.PowerShellHost.dll' DiskId='1'
+                      src='VSCmdShell Bin\Microsoft.VSPowerToys.VSCmdShell.PowerShellHost.dll'>
+              </File>
+              <File Id='File5' Name='readme' LongName='README VSCmdShell.mht' DiskId='1'
+          src='VSCmdShell Bin\README VSCmdShell.mht'>
+                <Shortcut Id="ReadmeDoc" Show="normal" Directory="ProgramMenuSubDir" Name="Doc" LongName="Readme" />
+              </File>
+
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="PMenu" LongName="Programs">
+        <Directory Id="ProgramMenuDir" Name="PWRTYSVS" LongName="Power Toys for Visual Studio">
+          <Directory Id="ProgramMenuSubDir" Name="VSCMDSM" LongName="VS Command Shell" />
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature 
+      Id='Complete' 
+      Title='VSCmdShell Add In' 
+      Description='VSCmdShell is AddIn for Visual Studio 2005 that integrates a shell window in to Visual Studio 2005 IDE.'
+      Display='expand' 
+      Level='1'
+      ConfigurableDirectory='INSTALLDIR'
+    >
+      <ComponentRef Id='VSCmdShellCore' />
+      <ComponentRef Id='VSCmdShellAddin' />
+    </Feature>
+
+    <CustomAction Id='LaunchReadme' Return='asyncNoWait' ExeCommand='[BROWSERLOC] "[INSTALLDIR]README VSCmdShell.mht"'
+                  Directory='INSTALLDIR'></CustomAction>
+
+    <!-- 
+    The LaunchConditions conditional ensures we only check registry keys during install.
+    -->
+    <InstallUISequence>
+      <LaunchConditions>NOT Installed</LaunchConditions>
+      <Show Dialog='PowerShellDlg' Before='PrepareDlg'>NOT POWERSHELL = "1.0" AND NOT Installed</Show>
+    </InstallUISequence>
+
+    <InstallExecuteSequence>
+      <Custom Action='LaunchReadme' OnExit='success'>NOT Installed</Custom>
+    </InstallExecuteSequence>
+
+    <UI>
+      <Dialog Id="PowerShellDlg" Y="50" Width="320" Height="120" Title="VSCmdShell Setup">
+        <Control Id="OK" Type="PushButton" X="112" Y="90" Width="100" Height="17" Default="yes" Cancel="yes" Text="OK">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="28" Y="15" Width="270" Height="75" Text="If you want to use Microsoft PowerShell within VSCmdShell you must have Microsoft PowerShell installed on your computer. You can download it from http://www.microsoft.com/windowsserver2003/technologies/management/powershell/default.mspx " />
+      </Dialog>
+    </UI>
+    <UIRef Id="WixUI" />
+
+    <!-- 
+    Set properties for the Add/Remove Programs (ARP) entry.
+    -->
+
+    <Property Id="ARPPRODUCTICON">arpicon.ico</Property>
+    <Icon Id="arpicon.ico" src="Bitmaps\powertoys.ico" />
+    <Property Id="ARPHELPLINK"><![CDATA[http://go.microsoft.com/fwlink/?LinkID=69507]]></Property>
+    <Property Id="ARPURLINFOABOUT"><![CDATA[http://go.microsoft.com/fwlink/?LinkID=69508]]></Property>
+    <Property Id="ARPCONTACT"><![CDATA[Microsoft Corporation]]></Property>
+    <Property Id="ARPCOMMENTS"><![CDATA[VSCmdShell is AddIn for Visual Studio 2005 that integrates a shell window in to Visual Studio 2005 IDE.]]></Property>
+
+  </Product>
+</Wix>

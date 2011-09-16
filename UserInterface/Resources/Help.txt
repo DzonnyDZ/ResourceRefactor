@@ -1,0 +1,12 @@
+Resource Refactoring Tool version 2.1.0
+=======================================
+© Microsoft 2006, extended by Ðonny 2009/2010
+Supports extraction from code file to RESX file.
+Supported languaged: C#, Visual Basic, XAML
+Limitations of XAML support:
+* You must register x prefix as follows: xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+* Resource class must be public
+* Resource property must be public
+* Only simple attributes are supported.
+* Text in elements is not supported.
+* Markup extensions are generally not supported.

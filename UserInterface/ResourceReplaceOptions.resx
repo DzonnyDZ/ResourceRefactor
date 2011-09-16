@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="BottomToolStripPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="BottomToolStripPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;BottomToolStripPanel.Name" xml:space="preserve">
+    <value>BottomToolStripPanel</value>
+  </data>
+  <data name="&gt;&gt;BottomToolStripPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BottomToolStripPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;BottomToolStripPanel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="TopToolStripPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="TopToolStripPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;TopToolStripPanel.Name" xml:space="preserve">
+    <value>TopToolStripPanel</value>
+  </data>
+  <data name="&gt;&gt;TopToolStripPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TopToolStripPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TopToolStripPanel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="RightToolStripPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="RightToolStripPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;RightToolStripPanel.Name" xml:space="preserve">
+    <value>RightToolStripPanel</value>
+  </data>
+  <data name="&gt;&gt;RightToolStripPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RightToolStripPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RightToolStripPanel.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="LeftToolStripPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="LeftToolStripPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;LeftToolStripPanel.Name" xml:space="preserve">
+    <value>LeftToolStripPanel</value>
+  </data>
+  <data name="&gt;&gt;LeftToolStripPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LeftToolStripPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LeftToolStripPanel.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="uxCreateNewResource.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="uxCreateNewResource.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uxCreateNewResource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uxCreateNewResource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 489</value>
+  </data>
+  <data name="uxCreateNewResource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 17</value>
+  </data>
+  <data name="uxCreateNewResource.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="uxCreateNewResource.Text" xml:space="preserve">
+    <value>&amp;Create new resource entry</value>
+  </data>
+  <data name="&gt;&gt;uxCreateNewResource.Name" xml:space="preserve">
+    <value>uxCreateNewResource</value>
+  </data>
+  <data name="&gt;&gt;uxCreateNewResource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxCreateNewResource.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxCreateNewResource.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 509</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
+  </data>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Resource &amp;Name:</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="uxNewResourceName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="uxNewResourceName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>111, 506</value>
+  </data>
+  <data name="uxNewResourceName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>246, 20</value>
+  </data>
+  <data name="uxNewResourceName.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;uxNewResourceName.Name" xml:space="preserve">
+    <value>uxNewResourceName</value>
+  </data>
+  <data name="&gt;&gt;uxNewResourceName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxNewResourceName.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxNewResourceName.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 10</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 13</value>
+  </data>
+  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>String to refactor:</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="uxTextToReplace.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="uxTextToReplace.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="uxTextToReplace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 7</value>
+  </data>
+  <data name="uxTextToReplace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>278, 20</value>
+  </data>
+  <data name="uxTextToReplace.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;uxTextToReplace.Name" xml:space="preserve">
+    <value>uxTextToReplace</value>
+  </data>
+  <data name="&gt;&gt;uxTextToReplace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxTextToReplace.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxTextToReplace.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="uxErrorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>56</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="uxOptionChangeAll.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uxOptionChangeAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uxOptionChangeAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 52</value>
+  </data>
+  <data name="uxOptionChangeAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 17</value>
+  </data>
+  <data name="uxOptionChangeAll.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="uxOptionChangeAll.Text" xml:space="preserve">
+    <value>&amp;All instances in this project</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeAll.Name" xml:space="preserve">
+    <value>uxOptionChangeAll</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeAll.Parent" xml:space="preserve">
+    <value>uxRefactorChoicePanel</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeAll.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 28</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 17</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="uxOptionChangeFileOnly.Text" xml:space="preserve">
+    <value>All instances in &amp;this source file</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeFileOnly.Name" xml:space="preserve">
+    <value>uxOptionChangeFileOnly</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeFileOnly.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeFileOnly.Parent" xml:space="preserve">
+    <value>uxRefactorChoicePanel</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeFileOnly.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 17</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="uxOptionChangeCurrentOnly.Text" xml:space="preserve">
+    <value>Just this &amp;instance</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeCurrentOnly.Name" xml:space="preserve">
+    <value>uxOptionChangeCurrentOnly</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeCurrentOnly.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeCurrentOnly.Parent" xml:space="preserve">
+    <value>uxRefactorChoicePanel</value>
+  </data>
+  <data name="&gt;&gt;uxOptionChangeCurrentOnly.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="uxRefactorChoicePanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>62, 30</value>
+  </data>
+  <data name="uxRefactorChoicePanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>313, 76</value>
+  </data>
+  <data name="uxRefactorChoicePanel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;uxRefactorChoicePanel.Name" xml:space="preserve">
+    <value>uxRefactorChoicePanel</value>
+  </data>
+  <data name="&gt;&gt;uxRefactorChoicePanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uxRefactorChoicePanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxRefactorChoicePanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 36</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 13</value>
+  </data>
+  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Refactor:</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="uxResourceFileSelector.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="uxResourceFileSelector.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uxResourceFileSelector.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="uxResourceFileSelector.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 112</value>
+  </data>
+  <data name="uxResourceFileSelector.Size" type="System.Drawing.Size, System.Drawing">
+    <value>372, 27</value>
+  </data>
+  <data name="uxResourceFileSelector.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;uxResourceFileSelector.Name" xml:space="preserve">
+    <value>uxResourceFileSelector</value>
+  </data>
+  <data name="&gt;&gt;uxResourceFileSelector.Type" xml:space="preserve">
+    <value>Microsoft.VSPowerToys.ResourceRefactor.ResourceFileListDropDown, ResourceRefactor.UserInterface, Version=1.0.2588.18869, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;uxResourceFileSelector.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxResourceFileSelector.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="uxResourceView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="uxResourceView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 145</value>
+  </data>
+  <data name="uxResourceView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 338</value>
+  </data>
+  <data name="uxResourceView.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;uxResourceView.Name" xml:space="preserve">
+    <value>uxResourceView</value>
+  </data>
+  <data name="&gt;&gt;uxResourceView.Type" xml:space="preserve">
+    <value>Microsoft.VSPowerToys.ResourceRefactor.ResourceGridView, ResourceRefactor.UserInterface, Version=1.0.2588.18869, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;uxResourceView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uxResourceView.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>382, 533</value>
+  </data>
+  <data name="&gt;&gt;uxErrorProvider.Name" xml:space="preserve">
+    <value>uxErrorProvider</value>
+  </data>
+  <data name="&gt;&gt;uxErrorProvider.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ResourceReplaceOptions</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

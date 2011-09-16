@@ -1,0 +1,29 @@
+<!--
+***********************************************************************************************
+runtests.targets
+
+This file contains a MSBuild target for running unit tests. 
+The RunTests target is invoked from the runtests batch script.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- 
+    This target assumes MSBee has already been installed by running build.cmd. 
+    MSBee must be installed for the scenario test projects to build, 
+    which look in the default install location for the MSBee .targets files.
+  -->
+  <Target Name="RunTests">
+
+    <!-- Run the unit tests -->
+    <Exec Command="&quot;$(NUnitDir)nunit-console.exe&quot; &quot;..\UnitTests\bin\$(Configuration)\ResourceRefactorTests.dll&quot;" />
+
+  </Target>
+
+  <!-- Import the settings.targets file to obtain the path to the NUnit directory. -->
+  <Import Project="..\ResourceRefactor.Settings.targets" />
+
+</Project>
