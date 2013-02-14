@@ -217,7 +217,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
             ResourceFile resFile = resources["Resource1.resx"];
             VBHardCodedString hcs = new VBHardCodedString(this.codeFile, 157, 172);
             IExtractResourceAction action = new GenericVBExtractResourceAction();
-            Assert.AreEqual("My.Resources.Resource1.Test", action.GetResourceReference(resFile, "Test"), "GetResourceReference does not work correctly in VB");
+            Assert.AreEqual("My.Resources.Resource1.Test", action.GetResourceReference(resFile, "Test", null), "GetResourceReference does not work correctly in VB");
         }
 
         

@@ -5,6 +5,7 @@ using System.IO;
 using EnvDTE;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
@@ -50,9 +51,17 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// <returns>Full line where the text would be replaced</returns>
         public string PreviewChanges(ResourceFile file, string resourceName) {
             Project project = null;
-            try { project = this.StringToExtract.Parent.Document.ProjectItem.ContainingProject; } catch { }
-            string reference = this.actionObject.GetResourceReference(file, resourceName, project);
-            reference = this.StringToExtract.GetShortestReference(reference, this.StringToExtract.GetImportedNamespaces());
+            string reference = "";
+            try { 
+                project = this.StringToExtract.Parent.Document.ProjectItem.ContainingProject;
+                reference = this.actionObject.GetResourceReference(file, resourceName, project);
+                reference = this.StringToExtract.GetShortestReference(reference, this.StringToExtract.GetImportedNamespaces());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+
+            }
             return reference;
         }
 

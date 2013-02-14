@@ -413,7 +413,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
             reference = reference.Substring(0, reference.Length - property.Length - (parts.Length == 0 ? 0 : 1));
             foreach (var ns in namespaces)
             {
-                if (!reference.Equals(ns.NamespaceName) && reference.StartsWith(ns + ".") && ns.NamespaceName.Length > longestMatch.NamespaceName.Length)
+
+                if (!reference.Equals(ns.NamespaceName) && reference.StartsWith(ns + ".") && 
+                     (longestMatch == null || ns.NamespaceName.Length > longestMatch.NamespaceName.Length))
                 {
                     longestMatch = ns;
                 }

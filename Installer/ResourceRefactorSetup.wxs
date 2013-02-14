@@ -46,12 +46,16 @@
             <RegistrySearch Id="VS2010Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\10.0" Name="ApplicationID" />
         </Property>
 
-        <Property Id="BROWSERLOC">
+        <Property Id="VS2012">
+            <RegistrySearch Id="VS2012Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\11.0" Name="ApplicationID" />
+        </Property>
+
+      <Property Id="BROWSERLOC">
             <RegistrySearch Id='DefaultBrowser' Type='raw' Root='HKCR' Key='http\shell\open\command' />
         </Property>
 
-        <Condition Message="Resource Refactoring Tool requires Visual Studio 2005/8/10, which is not present on the computer.">
-            VS2005 = "VisualStudio" OR VS2008 = "VisualStudio" OR VS2010 = "VisualStudio"
+        <Condition Message="Resource Refactoring Tool requires Visual Studio 2005/8/10/12, which is not present on the computer.">
+          VS2005 = "VisualStudio" OR VS2008 = "VisualStudio" OR VS2010 = "VisualStudio" OR VS2012 = "VisualStudio"
         </Condition>
 
         <Media Id='1' Cabinet='ResourceRefactor.cab' EmbedCab='yes' />

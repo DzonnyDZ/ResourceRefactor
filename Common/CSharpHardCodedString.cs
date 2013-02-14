@@ -96,20 +96,22 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         public override System.Collections.ObjectModel.Collection<NamespaceImport> GetImportedNamespaces() {
             Collection<NamespaceImport> importedNamespaces = new Collection<NamespaceImport>();
-            if (this.Parent.FileCodeModel != null) {
-                try {
-                    CodeElement t = this.Parent.FileCodeModel.CodeElementFromPoint(
-                                                    this.BeginEditPoint,
-                                                    vsCMElement.vsCMElementNamespace);
-                    if (t != null) {
-                        importedNamespaces.Add(new NamespaceImport(t.FullName, t.FullName));
+            try {
+                if (this.Parent.FileCodeModel != null) {
+                    try {
+                        CodeElement t = this.Parent.FileCodeModel.CodeElementFromPoint(
+                                                        this.BeginEditPoint,
+                                                        vsCMElement.vsCMElementNamespace);
+                        if (t != null) {
+                            importedNamespaces.Add(new NamespaceImport(t.FullName, t.FullName));
+                        }
+                    } catch (System.Runtime.InteropServices.COMException) {
                     }
-                } catch (System.Runtime.InteropServices.COMException) {
+                    foreach (CodeElement element in this.Parent.FileCodeModel.CodeElements) {
+                        FindUsingStatements(element, importedNamespaces);
+                    }
                 }
-                foreach (CodeElement element in this.Parent.FileCodeModel.CodeElements) {
-                    FindUsingStatements(element, importedNamespaces);
-                }
-            }
+            } catch (System.Runtime.InteropServices.COMException) { } catch (NotImplementedException) { }
             return importedNamespaces;
         }
 

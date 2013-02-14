@@ -5,6 +5,7 @@ using Microsoft.VSPowerToys.ResourceRefactor.Common;
 using EnvDTE;
 using System.Windows.Forms;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor
 {
@@ -54,7 +55,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor
         /// <returns>True if string is supported</returns>
         public bool QuerySupportForString(BaseHardCodedString stringInstance)
         {
-            return stringInstance is CSharpHardCodedString || stringInstance is VBHardCodedString || stringInstance is XamlHardCodedString;
+            return stringInstance is CSharpHardCodedString || stringInstance is VBHardCodedString || stringInstance is XamlHardCodedString || stringInstance is CSharpRazorHardCodedString;
         }
 
         /// <summary>
@@ -106,6 +107,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor
                 {
                     statusOption = vsCommandStatus.vsCommandStatusSupported | vsCommandStatus.vsCommandStatusEnabled;
                 }
+
             }
         }
 

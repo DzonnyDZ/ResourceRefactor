@@ -81,7 +81,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// </summary>
         public SharedEnvironment()
         {
-            Type dteType = Type.GetTypeFromProgID("VisualStudio.DTE.9.0");
+            Type dteType = Type.GetTypeFromProgID("VisualStudio.DTE.10.0");
             Assert.IsNotNull(dteType, "Visual Studio DTE Type could not be found");
             extensibility = (EnvDTE.DTE)(System.Activator.CreateInstance(dteType));
             extensibility.MainWindow.Visible = false;

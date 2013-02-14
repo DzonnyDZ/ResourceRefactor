@@ -150,4 +150,7 @@
   <data name="ExtractResourceUndoContextName" xml:space="preserve">
     <value>Extract resource</value>
   </data>
+  <data name="RegexInnerXML" xml:space="preserve">
+    <value>(?&lt;=&lt;((?&lt;tag&gt;\w+)((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'"&gt;\s]+))?)+\s*|\s*))&gt;)([^&lt;"]*)(?=&lt;/\s*\&lt;tag&gt;\s*&gt;)</value>
+  </data>
 </root>

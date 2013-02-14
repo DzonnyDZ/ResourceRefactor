@@ -14,6 +14,30 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{55DD4E55-97D9-4278-82CD-D4040759DECB}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Addin\\Addin.csproj
+		SccProjectName1 = Addin
+		SccLocalPath1 = Addin
+		SccProjectUniqueName2 = UserInterface\\UserInterface.vbproj
+		SccProjectName2 = UserInterface
+		SccLocalPath2 = UserInterface
+		SccProjectUniqueName3 = Common\\CommonCSharp.csproj
+		SccProjectName3 = Common
+		SccLocalPath3 = Common
+		SccProjectUniqueName4 = CommonVB\\CommonVB.vbproj
+		SccProjectName4 = CommonVB
+		SccLocalPath4 = CommonVB
+		SccProjectUniqueName5 = UnitTests\\UnitTests.csproj
+		SccProjectName5 = UnitTests
+		SccLocalPath5 = UnitTests
+		SccProjectUniqueName6 = Installer\\Installer.wixproj
+		SccProjectName6 = Installer
+		SccLocalPath6 = Installer
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

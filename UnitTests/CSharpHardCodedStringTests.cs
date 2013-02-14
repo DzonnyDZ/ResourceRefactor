@@ -255,7 +255,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         public void GetResourceReferenceTest()
         {
             ResourceFile resFile = resources["Resource1.resx"];
-            Assert.AreEqual("WindowsForms1.Resource1.Test", actionObject.GetResourceReference(resFile, "Test"), "GetResourceReference does not work correctly under different namespaces");
+            Assert.AreEqual("WindowsForms1.Resource1.Test", actionObject.GetResourceReference(resFile, "Test", null), "GetResourceReference does not work correctly under different namespaces");
         }
 
     }

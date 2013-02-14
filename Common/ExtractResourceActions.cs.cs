@@ -37,8 +37,8 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         public virtual bool QuerySupportForProject(EnvDTE.ProjectItem item) {
             if (item == null) return false;
             return
-                item.Document.Language.Equals("CSharp") &&
-                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp;
+                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp
+                && item.Document.Language.Equals("CSharp");
         }
 
         /// <summary>
@@ -71,10 +71,12 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             string namespacePrefix = String.Empty;
             try {
                 namespacePrefix = file.CustomToolNamespace;
-                if (String.IsNullOrEmpty(namespacePrefix) && file.FileNamespace != null) {
-                    namespacePrefix = file.FileNamespace;
-                } else {
-                    namespacePrefix = file.Item.ContainingProject.Properties.Item("DefaultNamespace").Value.ToString();
+                if (String.IsNullOrEmpty(namespacePrefix)) {
+                    if (file.FileNamespace != null) {
+                        namespacePrefix = file.FileNamespace;
+                    } else {
+                        namespacePrefix = file.Item.ContainingProject.Properties.Item("DefaultNamespace").Value.ToString();
+                    }
                 }
                 namespacePrefix += ".";
             } catch (ArgumentException) {
@@ -98,7 +100,8 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
                 throw new ArgumentException(Strings.InvalidResourceName, "resourceName");
             }
             string namespacePrefix = this.GetNamespacePrefix(file);
-            string reference = namespacePrefix + Path.GetFileNameWithoutExtension(file.DisplayName).Replace(' ', '_') + "." + resourceName.Replace(' ', '_');
+            string reference = namespacePrefix + Path.GetFileNameWithoutExtension(file.DisplayName).Replace(' ', '_') + "."
+                             + resourceName.Replace(' ', '_');
             return reference;
         }
 
@@ -117,6 +120,15 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         #endregion
     }
 
+    public class CSharpRazorExtractResourceAction : GenericCSharpExtractResourceAction {
+
+        public override bool QuerySupportForProject(ProjectItem item) {
+            if (item == null) return false;
+            return
+                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp
+                && item.Document.Language.Equals("HTML");
+        }
+    }
 
     /// <summary>
     /// Implementation supporting C# file and website projects.
