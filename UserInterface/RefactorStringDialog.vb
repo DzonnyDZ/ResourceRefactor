@@ -156,7 +156,8 @@ Public Class RefactorStringDialog
             My.Settings.PreviewChangesChecked = Me.uxPreviewCheckbox.Checked
             My.Settings.ReplaceSetting = Me.options.Options
         End If
-        My.Settings.Save()
+        ' Do this in FormClosing event
+        'My.Settings.Save()
     End Sub
 
     Private Shared Function CreateActionSitesFromInstanceList(ByVal list As ReadOnlyCollection(Of Common.BaseHardCodedString)) As ReadOnlyCollection(Of Common.ExtractToResourceActionSite)
@@ -169,5 +170,26 @@ Public Class RefactorStringDialog
 
     Private Sub cmdHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdHelp.Click
         MsgBox(My.Resources.Help)
+    End Sub
+
+    Private Sub RefactorStringDialog_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        My.Settings.RefactorStringDialogLocation = Me.Location
+
+        If Me.WindowState = FormWindowState.Normal Then
+            My.Settings.RefactorStringDialogSize = Me.Size
+        Else
+            My.Settings.RefactorStringDialogSize = Me.RestoreBounds.Size
+        End If
+        My.Settings.Save()
+    End Sub
+
+    Private Sub RefactorStringDialog_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        If (My.Settings.RefactorStringDialogLocation <> Nothing) And (My.Settings.RefactorStringDialogLocation <> System.Drawing.Point.Empty) Then
+            Me.Location = My.Settings.RefactorStringDialogLocation
+        End If
+
+        If (My.Settings.RefactorStringDialogSize <> Nothing) And (My.Settings.RefactorStringDialogSize <> System.Drawing.Size.Empty) Then
+            Me.Size = My.Settings.RefactorStringDialogSize
+        End If
     End Sub
 End Class

@@ -120,18 +120,6 @@ Public Class ResourceFile
 
     Private _fileNameSpace As String
 
-    ''' <summary>
-    ''' Returns the short file name form of the resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Private ReadOnly Property shortFileName() As String
-        Get
-            Return projectItem.Name
-        End Get
-    End Property
-
 #End Region
 
 #Region "Public Properties"
@@ -147,8 +135,20 @@ Public Class ResourceFile
             If IsDefaultResXFile() Then
                 Return "(Default resources)"
             Else
-                Return Me.shortFileName
+                Return Me.FileNamespace & "." & Me.ShortFileName
             End If
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns the short file name form of the resource file
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ShortFileName() As String
+        Get
+            Return projectItem.Name
         End Get
     End Property
 

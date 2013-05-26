@@ -20,8 +20,8 @@ Partial Class ResourceFileListDropDown
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ResourceFileListDropDown))
-        Me.lblResourceFile = New System.Windows.Forms.Label
-        Me.cboCreateNewResxFile = New Microsoft.VSPowerToys.ResourceRefactor.ComboBoxWithCreate
+        Me.lblResourceFile = New System.Windows.Forms.Label()
+        Me.cboCreateNewResxFile = New Microsoft.VSPowerToys.ResourceRefactor.ComboBoxWithCreate()
         Me.SuspendLayout()
         '
         'lblResourceFile
@@ -34,17 +34,15 @@ Partial Class ResourceFileListDropDown
         resources.ApplyResources(Me.cboCreateNewResxFile, "cboCreateNewResxFile")
         Me.cboCreateNewResxFile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboCreateNewResxFile.FormattingEnabled = True
-        Me.cboCreateNewResxFile.MinimumSize = New System.Drawing.Size(100, 0)
         Me.cboCreateNewResxFile.Name = "cboCreateNewResxFile"
         '
         'ResourceFileListDropDown
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.Controls.Add(Me.cboCreateNewResxFile)
         Me.Controls.Add(Me.lblResourceFile)
-        Me.MaximumSize = New System.Drawing.Size(1600, 27)
-        Me.MinimumSize = New System.Drawing.Size(200, 27)
         Me.Name = "ResourceFileListDropDown"
         Me.ResumeLayout(False)
         Me.PerformLayout()

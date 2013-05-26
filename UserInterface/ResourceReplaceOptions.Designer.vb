@@ -19,25 +19,25 @@ Partial Class ResourceReplaceOptions
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ResourceReplaceOptions))
-        Me.BottomToolStripPanel = New System.Windows.Forms.ToolStripPanel
-        Me.TopToolStripPanel = New System.Windows.Forms.ToolStripPanel
-        Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel
-        Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel
-        Me.uxCreateNewResource = New System.Windows.Forms.CheckBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.uxNewResourceName = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.uxTextToReplace = New System.Windows.Forms.TextBox
+        Me.BottomToolStripPanel = New System.Windows.Forms.ToolStripPanel()
+        Me.TopToolStripPanel = New System.Windows.Forms.ToolStripPanel()
+        Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel()
+        Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel()
+        Me.uxCreateNewResource = New System.Windows.Forms.CheckBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.uxNewResourceName = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.uxTextToReplace = New System.Windows.Forms.TextBox()
         Me.uxErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.uxRefactorChoicePanel = New System.Windows.Forms.Panel
-        Me.uxOptionChangeAll = New System.Windows.Forms.RadioButton
-        Me.uxOptionChangeFileOnly = New System.Windows.Forms.RadioButton
-        Me.uxOptionChangeCurrentOnly = New System.Windows.Forms.RadioButton
-        Me.uxResourceFileSelector = New Microsoft.VSPowerToys.ResourceRefactor.ResourceFileListDropDown
-        Me.uxResourceView = New Microsoft.VSPowerToys.ResourceRefactor.ResourceGridView
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.uxRefactorChoicePanel = New System.Windows.Forms.Panel()
+        Me.uxOptionChangeAll = New System.Windows.Forms.RadioButton()
+        Me.uxOptionChangeFileOnly = New System.Windows.Forms.RadioButton()
+        Me.uxOptionChangeCurrentOnly = New System.Windows.Forms.RadioButton()
+        Me.uxResourceFileSelector = New Microsoft.VSPowerToys.ResourceRefactor.ResourceFileListDropDown()
+        Me.uxResourceView = New Microsoft.VSPowerToys.ResourceRefactor.ResourceGridView()
         CType(Me.uxErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.uxRefactorChoicePanel.SuspendLayout()
         CType(Me.uxResourceView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -142,6 +142,7 @@ Partial Class ResourceReplaceOptions
         'uxResourceFileSelector
         '
         resources.ApplyResources(Me.uxResourceFileSelector, "uxResourceFileSelector")
+        Me.uxResourceFileSelector.BackColor = System.Drawing.SystemColors.Control
         Me.uxResourceFileSelector.ExtractResourceAction = Nothing
         Me.uxResourceFileSelector.MaximumSize = New System.Drawing.Size(1600, 27)
         Me.uxResourceFileSelector.MinimumSize = New System.Drawing.Size(200, 27)
