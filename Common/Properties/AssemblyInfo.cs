@@ -1,4 +1,4 @@
-﻿/// Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -34,7 +34,7 @@ using System.Security.Permissions;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
 
 
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]

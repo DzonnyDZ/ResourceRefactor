@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
     <Product Name='Power Toys for Visual Studio - Resource Refactoring Tool' Id='B5F6D97D-96DF-42b5-B2BD-0379B6AFAFE0'
-             Language='1033' Codepage='1252' Version='2.1.0' Manufacturer='Microsoft Corporation'
+             Language='1033' Codepage='1252' Version='3.0.0' Manufacturer='Microsoft Corporation'
              UpgradeCode='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
 
         <Package Id='*'
                  Keywords='Installer'
-                 Comments='Resource Refactoring Tool for Visual Studio 2005/8/10 allows developers to easily convert string literals in to resources.'
+                 Comments='Resource Refactoring Tool for Visual Studio 2005/8/10/12 allows developers to easily convert string literals in to resources.'
                  Manufacturer='Microsoft Corporation'
                  InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
 
         <Upgrade Id='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
-            <UpgradeVersion Minimum="2.1.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
-            <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="2.1.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+            <UpgradeVersion Minimum="3.0.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
+            <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="3.0.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
         </Upgrade>
 
         <!--

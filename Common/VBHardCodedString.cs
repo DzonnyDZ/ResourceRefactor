@@ -8,13 +8,11 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Collections.ObjectModel;
 
-namespace Microsoft.VSPowerToys.ResourceRefactor.Common
-{
+namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
     /// <summary>
     /// An implementation of BaseHardCodedString interface for VB files.
     /// </summary>
-    public class VBHardCodedString : BaseHardCodedString
-    {
+    public class VBHardCodedString : BaseHardCodedString {
 
         /// <summary>
         /// Cached value of the string
@@ -35,25 +33,21 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
         /// <param name="end">Ending index (including quotes)</param>
         public VBHardCodedString(ProjectItem parent, int start, int end)
             :
-            base(parent, start, end)
-        {
+            base(parent, start, end) {
         }
 
         /// <summary>
         /// Creates a new instance to use string checking functions.
         /// </summary>
-        public VBHardCodedString() : base()
-        {
+        public VBHardCodedString()
+            : base() {
         }
 
         #region BaseHardCodedString interface members
 
-        public override string Value
-        {
-            get
-            {
-                if (this.value == null)
-                {
+        public override string Value {
+            get {
+                if (this.value == null) {
                     this.value = this.BeginEditPoint.GetText(this.TextLength);
                     this.value = value.Substring(1, value.Length - 2).Replace("\"\"", "\"");
                 }
@@ -69,8 +63,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public override BaseHardCodedString CreateInstance(ProjectItem parent, int start, int end)
-        {
+        public override BaseHardCodedString CreateInstance(ProjectItem parent, int start, int end) {
             return new VBHardCodedString(parent, start, end);
         }
 
@@ -78,49 +71,39 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
 
         #region BaseHardCodedString members
 
-        protected override string StringRegExp
-        {
-            get
-            {
+        protected override string StringRegExp {
+            get {
                 return Strings.RegexVBLiteral;
             }
         }
 
-        protected override Regex CommentRegularExpression
-        {
-            get
-            {
-                if (commentRegexEngine == null)
-                {
+        protected override Regex CommentRegularExpression {
+            get {
+                if (commentRegexEngine == null) {
                     commentRegexEngine = new Regex(Strings.RegexVBComments, RegexOptions.Compiled);
                 }
                 return commentRegexEngine;
             }
         }
 
-        public override System.Collections.ObjectModel.Collection<NamespaceImport> GetImportedNamespaces()
-        {
+        public override System.Collections.ObjectModel.Collection<NamespaceImport> GetImportedNamespaces() {
             Collection<NamespaceImport> importedNamespaces = new Collection<NamespaceImport>();
-            if (this.Parent.FileCodeModel != null)
-            {
-                try
-                {
-                    CodeElement t = this.Parent.FileCodeModel.CodeElementFromPoint(
-                                                    this.BeginEditPoint,
-                                                    vsCMElement.vsCMElementNamespace);
-                    if (t != null)
-                    {
-                        importedNamespaces.Add(new NamespaceImport(t.FullName, t.FullName));
+            try {
+                if (this.Parent.FileCodeModel != null) {
+                    try {
+                        CodeElement t = this.Parent.FileCodeModel.CodeElementFromPoint(
+                                                        this.BeginEditPoint,
+                                                        vsCMElement.vsCMElementNamespace);
+                        if (t != null) {
+                            importedNamespaces.Add(new NamespaceImport(t.FullName, t.FullName));
+                        }
+                    } catch (System.Runtime.InteropServices.COMException) {
+                    }
+                    foreach (CodeElement element in this.Parent.FileCodeModel.CodeElements) {
+                        FindUsingStatements(element, importedNamespaces);
                     }
                 }
-                catch (System.Runtime.InteropServices.COMException)
-                {
-                }
-                foreach (CodeElement element in this.Parent.FileCodeModel.CodeElements)
-                {
-                    FindUsingStatements(element, importedNamespaces);
-                }
-            }
+            } catch (System.Runtime.InteropServices.COMException) { } catch (NotImplementedException) { }
             return importedNamespaces;
         }
 
@@ -129,11 +112,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
         /// </summary>
         /// <param name="element"></param>
         /// <param name="namespaces"></param>
-        private void FindUsingStatements(CodeElement element, Collection<NamespaceImport> namespaces)
-        {
+        private void FindUsingStatements(CodeElement element, Collection<NamespaceImport> namespaces) {
             System.Text.RegularExpressions.Regex regExp = new Regex(@"Imports[ \t](?<ns>[^,]+)(,(?<ns>[^,]+))*", RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
-            if (element.Kind == vsCMElement.vsCMElementImportStmt)
-            {
+            if (element.Kind == vsCMElement.vsCMElementImportStmt) {
                 string text = element.StartPoint.CreateEditPoint().GetText(element.EndPoint);
                 Match m = regExp.Match(text);
                 if (m.Success && m.Groups.Count > 1) {
@@ -146,10 +127,8 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common
             }
 
             // We don't need to recurse in to other types as they won't contain using statements
-            if (element.Kind == vsCMElement.vsCMElementNamespace)
-            {
-                foreach (CodeElement children in element.Children)
-                {
+            if (element.Kind == vsCMElement.vsCMElementNamespace) {
+                foreach (CodeElement children in element.Children) {
                     FindUsingStatements(children, namespaces);
                 }
             }

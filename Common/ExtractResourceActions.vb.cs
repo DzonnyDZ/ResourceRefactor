@@ -30,20 +30,15 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             get { return String.Empty; }
         }
 
-        /// <summary>
-        /// Supports all VB files and VB projects
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <summary>Supports all VB files and VB projects</summary>
         public virtual bool QuerySupportForProject(EnvDTE.ProjectItem item) {
+            if (item == null) return false;
             return
-                item != null && item.Document.Language.Equals("Basic") &&
-                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.VB;
+                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.VB &&
+                item.Document.Language.Equals("Basic");
         }
 
-        /// <summary>
-        /// This method will be used for filtering resource files displayed to user
-        /// </summary>
+        /// <summary>This method will be used for filtering resource files displayed to user</summary>
         /// <param name="item">Project item for the resource file</param>
         /// <returns>true if resource file is valid and should be displayed to user</returns>
         public virtual bool IsValidResourceFile(EnvDTE.ProjectItem item) {
@@ -125,6 +120,14 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         #endregion
     }
 
+    public class VBRazorExtractResourceAction : GenericVBExtractResourceAction {
+        public override bool QuerySupportForProject(ProjectItem item) {
+            if (item == null) return false;
+            return
+                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.VB
+                && item.Document.Language.Equals("HTML");
+        }
+    }
 
     /// <summary>
     /// Implementation supporting VB file and website projects.

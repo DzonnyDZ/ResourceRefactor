@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VSPowerToys.ResourceRefactor.Common;
-using EnvDTE;
-using System.Windows.Forms;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
+using System.Windows.Forms;
+using EnvDTE;
+using Microsoft.VSPowerToys.ResourceRefactor.Common;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor
 {
@@ -55,7 +52,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor
         /// <returns>True if string is supported</returns>
         public bool QuerySupportForString(BaseHardCodedString stringInstance)
         {
-            return stringInstance is CSharpHardCodedString || stringInstance is VBHardCodedString || stringInstance is XamlHardCodedString || stringInstance is CSharpRazorHardCodedString;
+            return stringInstance is CSharpHardCodedString || stringInstance is VBHardCodedString || stringInstance is XamlHardCodedString;
         }
 
         /// <summary>

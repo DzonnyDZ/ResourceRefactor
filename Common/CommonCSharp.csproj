@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="BaseHardCodedString.cs" />
     <Compile Include="CodeFileCollection.cs" />
+    <Compile Include="VBRazorHardCodedString.cs" />
     <Compile Include="CSharpRazorHardCodedString.cs" />
     <Compile Include="ExtractResourceActions.cs.cs" />
     <Compile Include="NamespaceImport.cs" />

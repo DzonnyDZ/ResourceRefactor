@@ -32,7 +32,7 @@ Imports System.Security.Permissions
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2.1.0.0")> 
+<Assembly: AssemblyVersion("3.0.0.0")> 
 <Module: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")> 
 '<Assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution:=True)> 
 
