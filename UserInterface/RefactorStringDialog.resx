@@ -301,13 +301,16 @@
     <value>options</value>
   </data>
   <data name="&gt;&gt;options.Type" xml:space="preserve">
-    <value>Microsoft.VSPowerToys.ResourceRefactor.ResourceReplaceOptions, ResourceRefactor.UserInterface, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Microsoft.VSPowerToys.ResourceRefactor.ResourceReplaceOptions, ResourceRefactor.UserInterface, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;options.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;options.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="cmdHelp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="cmdHelp.Location" type="System.Drawing.Point, System.Drawing">
     <value>354, 419</value>
