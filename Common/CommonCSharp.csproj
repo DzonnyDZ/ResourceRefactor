@@ -107,6 +107,9 @@
   <ItemGroup>
     <Compile Include="BaseHardCodedString.cs" />
     <Compile Include="CodeFileCollection.cs" />
+    <Compile Include="AspxHardCodedString.cs" />
+    <Compile Include="ExtractResourceActionBase.cs" />
+    <Compile Include="ExtractResourceActions.aspx.cs" />
     <Compile Include="VBRazorHardCodedString.cs" />
     <Compile Include="CSharpRazorHardCodedString.cs" />
     <Compile Include="ExtractResourceActions.cs.cs" />
@@ -114,7 +117,7 @@
     <Compile Include="ExtractResourceActions.vb.cs" />
     <Compile Include="ExtractResourceActions.xaml.cs" />
     <Compile Include="XamlHardCodedString.cs" />
-    <Compile Include="ExtractResourceActions.cs" />
+    <Compile Include="ExtractToResourceActionSite.cs" />
     <Compile Include="FilteredProjectCollection.cs" />
     <Compile Include="CSharpHardCodedString.cs" />
     <Compile Include="Interfaces.cs" />

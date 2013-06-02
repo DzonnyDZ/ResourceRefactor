@@ -2,41 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EnvDTE;
 using System.IO;
+using EnvDTE;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
+    /// <summary>Basic implementation supporting Aspx files.</summary>
+    /// <remarks>This implementation supports resx files using ResXFileCodeGenerator custom tool and has a very low priority so other implementations can be used instead for specific projects.</remarks>
+    public class GenericAspxExtractResourceAction : ExtractResourceActionBase {
 
-    /// <summary>Basic implementation supporting all C# projects.</summary>
-    /// <remarks>This implementation supports resx files using ResXFileCodeGenerator custom tool and
-    /// has a very low priority so other implementations can be used instead for specific projects.</remarks>
-    public class GenericCSharpExtractResourceAction : ExtractResourceActionBase {
-
-        /// <summary>Supports all C# files and C# projects</summary>
+        /// <summary>Supports all ASPX files and all projects</summary>
         public override bool QuerySupportForProject(EnvDTE.ProjectItem item) {
-            if (item == null) return false;
-            return ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp && item.Document.Language.Equals("CSharp");
-        }
-
-        /// <summary>Determines the namespace of the provided resource file</summary>
-        /// <param name="file">Reference to the resource file</param>
-        /// <returns>Namespace to be used to access the resource file</returns>
-        protected override string GetNamespacePrefix(ResourceFile file) {
-            string namespacePrefix = String.Empty;
-            try {
-                namespacePrefix = file.CustomToolNamespace;
-                if (String.IsNullOrEmpty(namespacePrefix)) {
-                    if (file.FileNamespace != null) {
-                        namespacePrefix = file.FileNamespace;
-                    } else {
-                        namespacePrefix = file.Item.ContainingProject.Properties.Item("DefaultNamespace").Value.ToString();
-                    }
-                }
-                namespacePrefix += ".";
-            } catch (ArgumentException) {
-                namespacePrefix = String.Empty;
-            }
-            return namespacePrefix;
+            return item != null && item.Document.Language.Equals("HTML") &&
+                (item.Document.Name.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase) || item.Document.Name.EndsWith(".ascx", StringComparison.CurrentCultureIgnoreCase) || item.Document.Name.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase));
         }
 
         /// <summary>Returns the code reference to resource specified in the parameters</summary>
@@ -45,44 +22,21 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// <returns>a piece of code that would reference to the resource provided</returns>
         /// <remarks>This method does not verify if resource actually exists</remarks>
         public override string GetResourceReference(ResourceFile file, string resourceName, Project project, BaseHardCodedString @string) {
-            if (file == null) {
-                throw new ArgumentNullException("file");
-            }
-            if (String.IsNullOrEmpty(resourceName)) {
-                throw new ArgumentException(Strings.InvalidResourceName, "resourceName");
-            }
-            string namespacePrefix = this.GetNamespacePrefix(file);
-            string reference = namespacePrefix + Path.GetFileNameWithoutExtension(file.DisplayName).Replace(' ', '_') + "."
-                             + resourceName.Replace(' ', '_');
-            return reference;
-        }
-
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
-        /// <param name="item">Project item for the resource file</param>
-        public override void UpdateResourceFileProperties(ProjectItem item) {
-            if (item != null) {
-                item.Properties.Item("CustomTool").Value = "ResXFileCodeGenerator";
-                item.Properties.Item("ItemType").Value = "EmbeddedResource";
+            if (@string.Value.StartsWith("\"") || @string.Value.StartsWith("'")) {
+                return string.Format("{0}<%$ Resources:{1}, {2} %>{0}", @string.Value[0], Path.GetFileNameWithoutExtension(file.FileName), resourceName);
+            } else {
+                return string.Format("<asp:Literal ruant=\"server\" Text=\"<%$ Resources:{0}, {1} %>\" Mode=\"Encode\"/>", file.FileName, resourceName);
             }
         }
-    }
 
-    public class CSharpRazorExtractResourceAction : GenericCSharpExtractResourceAction {
-
-        public override bool QuerySupportForProject(ProjectItem item) {
-            if (item == null) return false;
-            return
-                ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp
-                && item.Document.Language.Equals("HTML") && item.Document.Name.EndsWith(".cshtml", StringComparison.CurrentCultureIgnoreCase);
+        protected override string GetNamespacePrefix(ResourceFile file) {
+            return "";
         }
     }
 
     /// <summary>Implementation supporting C# file and website projects.</summary>
     /// <remarks>This implementation is used when string is in a C# file which is contained by a website project</remarks>
-    public class WebsiteCSharpExtractResourceAction : GenericCSharpExtractResourceAction {
+    public class WebSiteAspxExtractResourceAction : GenericAspxExtractResourceAction {
         #region IExtractResourceAction Members
 
         /// <summary>
@@ -143,9 +97,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
     }
 
     /// <summary>Implementation supporting C# file and web application projects.</summary>
-    public class WebApplicationCSharpExtractResourceAction : GenericCSharpExtractResourceAction {
-        #region IExtractResourceAction Members
-
+    public class WebApplicationAspxExtractResourceAction : GenericAspxExtractResourceAction {
         /// <summary>
         /// Priority of the action. If there are multiple actions supporting the same item, action with
         /// the highest priority will be selected
@@ -154,20 +106,15 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             get { return 50; }
         }
 
-        /// <summary>
-        /// Gets the default relative path for resource file.
-        /// </summary>
+        /// <summary>Gets the default relative path for resource file.</summary>
         public override string DefaultResourceFilePath {
             get {
                 return "App_GlobalResources";
             }
         }
 
-        /// <summary>
-        /// Queries if this action supports the provided project item and its containing project
-        /// </summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
         /// <param name="item">Project item to query support for</param>
-        /// <returns></returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             if (item == null) return false;
             bool returnValue = base.QuerySupportForProject(item);
@@ -192,8 +139,6 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         public override bool IsValidResourceFile(ProjectItem item) {
             return base.IsValidResourceFile(item) || IsValidContentResourceFile(item);
         }
-
-        #endregion
 
         /// <summary>
         /// Determines the namespace of the provided resource file
@@ -229,7 +174,6 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// Checks if resource file is a valid content resource file used in web application projects
         /// These resource files must be located in App_GlobalResources directory
         /// </summary>
-        /// <returns></returns>
         public static bool IsValidContentResourceFile(ProjectItem item) {
             if (item == null) return false;
             try {
@@ -247,11 +191,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
-        /// <summary>
-        /// Gets the relative path of the item in the project
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <summary>Gets the relative path of the item in the project</summary>
         public static string GetRelativePathForItem(ProjectItem item) {
             if (item == null) {
                 throw new ArgumentNullException("item");
@@ -266,5 +206,4 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
     }
-
 }

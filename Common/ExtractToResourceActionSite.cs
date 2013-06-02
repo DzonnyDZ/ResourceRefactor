@@ -9,11 +9,7 @@ using System.Diagnostics;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
-
-
-    /// <summary>
-    /// Represents a region of the code that is going to be refactored.
-    /// </summary>
+    /// <summary>Represents a region of the code that is going to be refactored.</summary>
     /// <remarks>Contains methods to preview changes to be applied and to do the actual refactoring</remarks>
     public class ExtractToResourceActionSite {
         private BaseHardCodedString stringInstance;
@@ -54,7 +50,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             string reference = "";
             try { 
                 project = this.StringToExtract.Parent.Document.ProjectItem.ContainingProject;
-                reference = this.actionObject.GetResourceReference(file, resourceName, project);
+                reference = this.actionObject.GetResourceReference(file, resourceName, project, stringInstance);
                 reference = this.StringToExtract.GetShortestReference(reference, this.StringToExtract.GetImportedNamespaces());
             }
             catch (Exception e)
@@ -76,7 +72,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             try {
                 Project project = null;
                 try { project = this.StringToExtract.Parent.Document.ProjectItem.ContainingProject; } catch { }
-                string reference = this.actionObject.GetResourceReference(file, resourceName, project);
+                string reference = this.actionObject.GetResourceReference(file, resourceName, project, stringInstance);
                 reference = this.StringToExtract.GetShortestReference(reference, this.StringToExtract.GetImportedNamespaces());
                 this.StringToExtract.Replace(reference);
                 undo.Close();
@@ -144,7 +140,5 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         }
         #endregion
     }
-
-
 
 }

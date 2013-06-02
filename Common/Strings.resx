@@ -142,15 +142,21 @@
     <value>Invalid resource name</value>
   </data>
   <data name="RegexXamlComments" xml:space="preserve">
-    <value>\&lt;!--([^-]|(-[^-])--\&gt;</value>
+    <value>\&lt;!--([^-]|(-[^-]))*--\&gt;</value>
   </data>
   <data name="RegexXamlLiteral" xml:space="preserve">
-    <value>("[^"]*")|('[^']+')</value>
+    <value>("[^"]*")|('[^']*')</value>
   </data>
   <data name="ExtractResourceUndoContextName" xml:space="preserve">
     <value>Extract resource</value>
   </data>
   <data name="RegexInnerXML" xml:space="preserve">
     <value>(?&lt;=&lt;((?&lt;tag&gt;\w+)((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'"&gt;\s]+))?)+\s*|\s*))&gt;)([^&lt;"]*)(?=&lt;/\s*\&lt;tag&gt;\s*&gt;)</value>
+  </data>
+  <data name="RegexAspxComment" xml:space="preserve">
+    <value>(\&lt;!--([^-]|(-[^-])--\&gt;)|(&lt;%--(([^%]|(%[^&gt;]))*%&gt;)</value>
+  </data>
+  <data name="RegexAspxLiteral" xml:space="preserve">
+    <value>("[^"]*")|('[^']*')|([^&lt;&gt;]+)</value>
   </data>
 </root>
