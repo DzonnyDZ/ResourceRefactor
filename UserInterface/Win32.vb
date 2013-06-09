@@ -1,11 +1,11 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.InteropServices
 
 ''' <summary>
-''' Definition of PARAFORMAT2 structure
+''' Contains information about paragraph formatting attributes in a rich edit control.
+''' PARAFORMAT2 is a Microsoft Rich Edit 2.0 extension of the PARAFORMAT structure.
+''' Microsoft Rich Edit 2.0 allows you to use either structure with the EM_GETPARAFORMAT and EM_SETPARAFORMAT messages.
 ''' </summary>
-''' <remarks></remarks>
 <StructLayout(LayoutKind.Sequential)> _
 <SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased")> _
 <SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")> _
@@ -68,25 +68,18 @@ Public Structure PARAFORMAT2
     Public wBorders As Int16
 End Structure
 
-''' <summary>
-''' Contains native method wrappers
-''' </summary>
+''' <summary>Contains native method wrappers</summary>
 NotInheritable Class NativeMethods
 
-    ''' <summary>
-    ''' Hiding the default constructor
-    ''' </summary>
-    Private Sub New()
-
+    ''' <summary>Hiding the default constructor</summary>
+    Partial Private Sub New()
     End Sub
 
-    ''' <summary>
-    ''' SendMessage wrapper for using with PARAFORMAT2 structure
-    ''' </summary>
-    ''' <param name="hWnd"></param>
-    ''' <param name="msg"></param>
-    ''' <param name="wParam"></param>
-    ''' <param name="lParam"></param>
+    ''' <summary><see cref="SendMessage"/> wrapper for using with <see cref="PARAFORMAT2"/> structure</summary>
+    ''' <param name="hWnd"> handle to the window whose window procedure will receive the message</param>
+    ''' <param name="msg">The message to be sent.</param>
+    ''' <param name="wParam">Additional message-specific information.</param>
+    ''' <param name="lParam">Additional message-specific information - the <see cref="PARAFORMAT2"/> structure in thdis case.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <DllImport("user32", CharSet:=CharSet.Auto)> _

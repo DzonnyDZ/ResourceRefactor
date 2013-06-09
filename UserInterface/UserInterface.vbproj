@@ -68,6 +68,12 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\ResourceRefactor.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
@@ -90,6 +96,12 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\ResourceRefactor.snk">
+      <Link>My Project\ResourceRefactor.snk</Link>
+    </None>
+    <Compile Include="..\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
+    </Compile>
     <Compile Include="ComboBoxWithCreate.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -227,6 +239,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    
     <None Include="Resources\Help.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
@@ -238,9 +251,9 @@
   <!-- For FxCop builds, delete any old log and run FxCop  -->
   <PropertyGroup Condition="'$(RunFxCop)'=='true'">
     <PostBuildEvent>
-      del "$(FxCopLogFile)"
-      call "$(FxCopExtDir)FxCopCmd.exe" /f:"$(TargetPath)" /o:"$(FxCopLogFile)" /dic:"$(ProjectDir)..\CustomDictionary.xml" /console /gac
-    </PostBuildEvent>
+            del "$(FxCopLogFile)"
+            call "$(FxCopExtDir)FxCopCmd.exe" /f:"$(TargetPath)" /o:"$(FxCopLogFile)" /dic:"$(ProjectDir)..\CustomDictionary.xml" /console /gac
+        </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

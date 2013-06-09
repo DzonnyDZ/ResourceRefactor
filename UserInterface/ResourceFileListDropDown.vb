@@ -1,18 +1,10 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
 Imports EnvDTE
 Imports System.Windows.Forms
 
-''' <summary>
-''' A user control that lists resource files in a ResourceFileCollection and also
-''' allows user to create a new resource
-''' </summary>
-''' <remarks></remarks>
+''' <summary>A user control that lists resource files in a ResourceFileCollection and also allows user to create a new resource</summary>
 Public Class ResourceFileListDropDown
 
-    ''' <summary>
-    ''' Raised when resource file selection has been changed by the user
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Raised when resource file selection has been changed by the user</summary>
     Public Event SelectionChanged As EventHandler(Of EventArgs)
 
     Private _resourceFiles As Common.ResourceFileCollection
@@ -20,6 +12,7 @@ Public Class ResourceFileListDropDown
 
     Private _extractResourceAction As Common.IExtractResourceAction
 
+    ''' <summary>Gets or sets selected resource file</summary>
     Public Property SelectedResourceFile() As Common.ResourceFile
         Get
             If Me.cboCreateNewResxFile.SelectedItem IsNot Nothing Then
@@ -34,12 +27,7 @@ Public Class ResourceFileListDropDown
         End Set
     End Property
 
-    ''' <summary>
-    ''' Gets or sets the current action object in use
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets or sets the current action object in use</summary>
     Public Property ExtractResourceAction() As Common.IExtractResourceAction
         Get
             Return Me._extractResourceAction
@@ -49,11 +37,8 @@ Public Class ResourceFileListDropDown
         End Set
     End Property
 
-    ''' <summary>
-    ''' Fills the resource file combobox with entries from provided ResourceFileCollection
-    ''' </summary>
+    ''' <summary>Fills the resource file combobox with entries from provided <see cref="Common.ResourceFileCollection"/></summary>
     ''' <param name="resourceFiles">Resource file collection containing resource file entries</param>
-    ''' <remarks></remarks>
     Public Sub FillResourceFilesDropDown(ByVal resourceFiles As Common.ResourceFileCollection)
         _resourceFiles = resourceFiles
         cboCreateNewResxFile.Items.Clear()
@@ -115,12 +100,9 @@ Public Class ResourceFileListDropDown
         RaiseEvent SelectionChanged(Me, Nothing)
     End Sub
 
-    ''' <summary>
-    ''' We save the last selected entry to return to it in case "Create new file" fails
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
+    ''' <summary>We save the last selected entry to return to it in case "Create new file" fails</summary>
+    ''' <param name="sender">Source of the event</param>
+    ''' <param name="e">Event arguments</param>
     Private Sub cboCreateNewResxFile_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboCreateNewResxFile.SelectedIndexChanged
         If Not Me.cboCreateNewResxFile.SelectedItem Is Nothing Then
             Me.lastSelectedItem = TryCast(Me.cboCreateNewResxFile.SelectedItem, Common.ResourceFile)

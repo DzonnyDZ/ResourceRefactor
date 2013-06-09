@@ -8,12 +8,10 @@ using System.Web.WebPages.Razor.Configuration;
 using EnvDTE;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
-    /// <summary>An implementation of BaseHardCodedString interface for vbhtml (Razor) files.</summary>
+    /// <summary>An implementation of <see cref="BaseHardCodedString"/> for vbhtml (Razor) files.</summary>
     public class VBRazorHardCodedString : VBHardCodedString {
         /// <summary>Default constructor - creates a new instance of the <see cref="VBRazorHardCodedString"/> class</summary>
-        public VBRazorHardCodedString()
-            : base() {
-        }
+        public VBRazorHardCodedString() {        }
 
         /// <summary>Constructor for hard coded strings in C# Razor files</summary>
         /// <param name="parent">Reference to code file containing the string</param>
@@ -29,6 +27,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return new VBRazorHardCodedString(parent, start, end);
         }
 
+        /// <summary>Gets the regular expression to identify strings</summary>
         protected override string StringRegExp {
             get {
                 return String.Format("{0}|{1}", Strings.RegexInnerXML, base.StringRegExp);
@@ -37,8 +36,10 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         /// <summary>Cached value of the string</summary>
         private string value;
+        /// <summary>Indicates if Razor @ prefix is required</summary>
         private bool needsRazorPrefix = false;
 
+        /// <summary>When overrden in derived class gets actual value of the string (without quotes and with special characters replaced)</summary>
         public override string Value {
             get {
                 if (this.value == null) {
@@ -58,6 +59,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
+        /// <summary>Returns a collection of namespaces imported in the files ('Imports' keyword)</summary>
+        /// <returns>A collection of namespace imports for effective for hardcoded string location</returns>
+        /// <remarks>This list will be used to determine the replacement string</remarks>
         public override Collection<NamespaceImport> GetImportedNamespaces() {
             var namespaces = base.GetImportedNamespaces();
             GetWebConfigNamespaces(namespaces);
@@ -66,6 +70,8 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return namespaces;
         }
 
+        /// <summary>Returns a collection of namespaces imported in the CSHTML file itself</summary>
+        /// <param name="namespaces">A collection to add namespaces imported in the CSHTML file to</param>
         private void GetNamespacesFromFile(Collection<NamespaceImport> namespaces) {
             TextDocument doc = (TextDocument)this.Parent.Document.Object("TextDocument");
             string contents = ExtensibilityMethods.GetDocumentText(doc);
@@ -83,6 +89,8 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
+        /// <summary>Returns a collection of namespaces imported in web.config files</summary>
+        /// <param name="namespaces">A collection to add namespaces imported in web.config files to</param>
         private void GetWebConfigNamespaces(Collection<NamespaceImport> namespaces) {
             string currentPath = this.Parent.Document.Path; // "D:\\CarolesFiles\\Documents\\Visual Studio 2010\\Projects\\OdeToFood\\OdeToFood\\Views\\Home\\";
             string projectPath = this.Parent.ContainingProject.FullName;  //"D:\\CarolesFiles\\Documents\\Visual Studio 2010\\Projects\\OdeToFood\\OdeToFood\\OdeToFood.csproj";
@@ -119,8 +127,12 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
                 }
 
             }
-        }  
+        }
 
+        /// <summary>Shortens a full namespace reference by looking at a list of namespaces that are imported in the code</summary>
+        /// <param name="reference">Reference to shorten</param>
+        /// <param name="namespaces">Collection of namespaces imported in the file</param>
+        /// <returns>Shortest form the of the reference valid for the file</returns>
         public override string GetShortestReference(string reference, Collection<NamespaceImport> namespaces) {
             string refstr = base.GetShortestReference(reference, namespaces);
 

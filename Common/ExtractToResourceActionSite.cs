@@ -16,32 +16,20 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         private IExtractResourceAction actionObject;
 
-        /// <summary>
-        /// Gets the string instance to refactor
-        /// </summary>
-        public BaseHardCodedString StringToExtract {
-            get { return stringInstance; }
-        }
+        /// <summary>Gets the string instance to refactor</summary>
+        public BaseHardCodedString StringToExtract {get { return stringInstance; }}
 
-        /// <summary>
-        /// Gets the action object to use for refactoring
-        /// </summary>
-        public IExtractResourceAction ActionObject {
-            get { return this.actionObject; }
-        }
+        /// <summary>Gets the action object to use for refactoring</summary>
+        public IExtractResourceAction ActionObject {get { return this.actionObject; }}
 
-        /// <summary>
-        /// Creates a new instance to refactor provided string instance
-        /// </summary>
+        /// <summary>Creates a new instance to refactor provided string instance</summary>
         /// <param name="stringInstance">String instance to refactor</param>
         public ExtractToResourceActionSite(BaseHardCodedString stringInstance) {
             this.stringInstance = stringInstance;
             actionObject = GetExtractResourceActionObject(this.StringToExtract);
         }
 
-        /// <summary>
-        /// Returns a preview of the line after the literal is replaced by a reference to the resource
-        /// </summary>
+        /// <summary>Returns a preview of the line after the literal is replaced by a reference to the resource</summary>
         /// <param name="file">Resource file containing the resource</param>
         /// <param name="resourceName">Name of the resource</param>
         /// <returns>Full line where the text would be replaced</returns>
@@ -61,11 +49,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return reference;
         }
 
-        /// <summary>
-        /// Extracts the string to a resource file and replaces it with a reference to the new entry
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="resourceName"></param>
+        /// <summary>Extracts the string to a resource file and replaces it with a reference to the new entry</summary>
+        /// <param name="file">A resource file to extract string to</param>
+        /// <param name="resourceName">Name ot be given to the resource</param>
         public void ExtractStringToResource(ResourceFile file, string resourceName) {
             UndoContext undo = StringToExtract.Parent.Document.DTE.UndoContext;
             undo.Open(Strings.ExtractResourceUndoContextName);
@@ -84,22 +70,15 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         #region Static Methods
 
-        /// <summary>
-        /// A cache of action items used before, key is a ProjectItem instance since a ProjectItem will always
-        /// have the same action object
-        /// </summary>
+        /// <summary>A cache of action items used before, key is a <see cref="ProjectItem"/> instance since a ProjectItem will always have the same action object</summary>
         private static Dictionary<ProjectItem, IExtractResourceAction> actionObjectCache = new Dictionary<ProjectItem, IExtractResourceAction>();
 
-        /// <summary>
-        /// List of available implementation in the current assembly.
-        /// </summary>
+        /// <summary>List of available action implementations.</summary>
         private static List<IExtractResourceAction> availableActionObjectList;
 
-        /// <summary>
-        /// Gets the correct ExtractResource action implementation for the provided string instance
-        /// </summary>
+        /// <summary>Gets the correct <see cref="IExtractResource"/> action implementation for the provided string instance</summary>
         /// <param name="instance">String instance to refactor</param>
-        /// <returns>an IExtractResourceAction implementation. null if no suitable action is found.</returns>
+        /// <returns>an <see cref="IExtractResourceAction"/> implementation. null if no suitable action is found.</returns>
         public static IExtractResourceAction GetExtractResourceActionObject(BaseHardCodedString instance) {
             if (actionObjectCache.ContainsKey(instance.Parent)) return actionObjectCache[instance.Parent];
             if (availableActionObjectList == null) {

@@ -4,22 +4,14 @@ Imports System.Resources
 Imports System.Collections.ObjectModel
 Imports EnvDTE
 
-''' <summary>
-''' An extension to tree view for displaying hard coded string instances
-''' </summary>
-''' <remarks></remarks>
+''' <summary>An extension to tree view for displaying hard coded string instances</summary>
 Public Class InstanceListView
     Inherits System.Windows.Forms.TreeView
 
 
 #Region "Public Properties"
 
-    ''' <summary>
-    ''' Gets a read only collection of instances that are selected by user to be replaced
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets a read only collection of instances that are selected by user to be replaced</summary>
     Public ReadOnly Property SelectedInstances() As ReadOnlyCollection(Of Common.ExtractToResourceActionSite)
         Get
             Dim collection As Collection(Of Common.ExtractToResourceActionSite) = New Collection(Of Common.ExtractToResourceActionSite)()
@@ -34,13 +26,8 @@ Public Class InstanceListView
         End Get
     End Property
 
-    ''' <summary>
-    ''' Returns the file related to node that is currently selected. If no nodes are selected
-    ''' Nothing is returned.
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets the file related to node that is currently selected</summary>
+    ''' <returns>The file related to node that is currently selected. If no nodes are selected null is returned.</returns>
     Public ReadOnly Property CurrentSelectedFile() As ProjectItem
         Get
             If Me.SelectedNode IsNot Nothing Then
@@ -57,20 +44,14 @@ Public Class InstanceListView
 
 #End Region
 
-    ''' <summary>
-    ''' Creates a new instance of Instance List viewer
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Creates a new instance of Instance List viewer</summary>
     Public Sub New()
         MyBase.New()
         Me.CheckBoxes = True
     End Sub
 
-    ''' <summary>
-    ''' Fills the list view with instances from the given collection. 
-    ''' </summary>
+    ''' <summary>Fills the list view with instances from the given collection. </summary>
     ''' <param name="list">A list of BaseHardCodedString object instances</param>
-    ''' <remarks></remarks>
     Public Sub BindData(ByVal list As ReadOnlyCollection(Of Common.ExtractToResourceActionSite))
         Me.BeginUpdate()
         Me.Nodes.Clear()
@@ -96,11 +77,8 @@ Public Class InstanceListView
         Me.EndUpdate()
     End Sub
 
-    ''' <summary>
-    ''' Checks if a file node is checked/unchecked and performs the behaviour on all children nodes.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
+    ''' <summary>Checks if a file node is checked/unchecked and performs the behaviour on all children nodes.</summary>
+    ''' <param name="e">Event argumens</param>
     Protected Overrides Sub OnAfterCheck(ByVal e As System.Windows.Forms.TreeViewEventArgs)
         If e.Node.Nodes.Count > 0 Then
             Dim checkedState As Boolean = e.Node.Checked

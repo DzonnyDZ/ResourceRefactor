@@ -7,13 +7,14 @@ using System.IO;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
-    /// <summary>
-    /// Basic implementation supporting all VB projects.
-    /// </summary>
+    /// <summary>Basic action implementation supporting all VB projects.</summary>
     /// <remarks>This implementation supports resx files using ResXFileCodeGenerator custom tool and
     /// has a very low priority so other implementations can be used instead for specific projects.</remarks>
     public class GenericVBExtractResourceAction : ExtractResourceActionBase {
-        /// <summary>Supports all VB files and VB projects</summary>
+
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports all VB projects</returns>
         public override bool QuerySupportForProject(EnvDTE.ProjectItem item) {
             if (item == null) return false;
             return
@@ -74,7 +75,11 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         }
     }
 
+    /// <summary>Resource extration acction implementation for Visual Basic Razor files (VBHTML)</summary>
     public class VBRazorExtractResourceAction : GenericVBExtractResourceAction {
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports Rator (VBHTML) fiels in VB projects</returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             if (item == null) return false;
             return
@@ -87,10 +92,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
     /// <remarks>This implementation is used when string is in a VB file which is contained by a website project</remarks>
     public class WebsiteVBExtractResourceAction : GenericVBExtractResourceAction {
 
-        /// <summary>
-        /// Priority of the action. If there are multiple actions supporting the same item, action with
-        /// the highest priority will be selected
-        /// </summary>
+        /// <summary>Gets priority of the action.</summary>
         public override int Priority { get { return 50; } }
 
         /// <summary>Gets the default relative path for resource file.</summary>
@@ -114,9 +116,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return WebsiteCSharpExtractResourceAction.CheckResourceFileForWebSites(item);
         }
 
-        /// <summary>
-        /// Determines the namespace of the provided resource file
-        /// </summary>
+        /// <summary>Determines the namespace of the provided resource file</summary>
         /// <param name="file">Reference to the resource file</param>
         /// <returns>Namespace to be used to access the resource file</returns>
         protected override string GetNamespacePrefix(ResourceFile file) {
@@ -125,33 +125,24 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         /// <summary>
         /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
+        /// is correctly supported by the same instance of <see cref="IExtractResourceAction"/>
         /// </summary>
         /// <param name="item">Project item for the resource file</param>
-        public override void UpdateResourceFileProperties(ProjectItem item) {
-        }
+        /// <remarks>This implementation does nothing</remarks>
+        public override void UpdateResourceFileProperties(ProjectItem item) {}
     }
 
-    /// <summary>
-    /// Implementation supporting VB.Net file and web application projects.
-    /// </summary>
+    /// <summary>Resource extract implementation supporting VB.Net file and web application projects.</summary>
     public class WebApplicationVBExtractResourceAction : GenericVBExtractResourceAction {
-        /// <summary>
-        /// Priority of the action. If there are multiple actions supporting the same item, action with
-        /// the highest priority will be selected
-        /// </summary>
+        /// <summary>Gets priority of the action.</summary>
         public override int Priority { get { return 50; } }
 
-        /// <summary>
-        /// Gets the default relative path for resource file.
-        /// </summary>
+        /// <summary>Gets the default relative path for resource file.</summary>
         public override string DefaultResourceFilePath { get { return "App_GlobalResources"; } }
 
-        /// <summary>
-        /// Queries if this action supports the provided project item and its containing project
-        /// </summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
         /// <param name="item">Project item to query support for</param>
-        /// <returns></returns>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports web applications</returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             if (item == null) return false;
             bool returnValue = base.QuerySupportForProject(item);
@@ -168,18 +159,14 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return returnValue && extenderFound;
         }
 
-        /// <summary>
-        /// This method will be used for filtering resource files displayed to user
-        /// </summary>
+        /// <summary>This method will be used for filtering resource files displayed to user</summary>
         /// <param name="item">Project item for the resource file</param>
         /// <returns>true if resource file is valid and should be displayed to user</returns>
         public override bool IsValidResourceFile(ProjectItem item) {
             return base.IsValidResourceFile(item) || WebApplicationCSharpExtractResourceAction.IsValidContentResourceFile(item);
         }
 
-        /// <summary>
-        /// Determines the namespace of the provided resource file
-        /// </summary>
+        /// <summary>Determines the namespace of the provided resource file</summary>
         /// <param name="file">Reference to the resource file</param>
         /// <returns>Namespace to be used to access the resource file</returns>
         protected override string GetNamespacePrefix(ResourceFile file) {

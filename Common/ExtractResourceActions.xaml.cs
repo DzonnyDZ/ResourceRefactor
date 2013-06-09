@@ -6,20 +6,21 @@ using System.IO;
 using EnvDTE;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
-    /// <summary>Basic implementation supporting XAML files.</summary>
-    /// <remarks>This implementation supports resx files using ResXFileCodeGenerator custom tool and has a very low priority so other implementations can be used instead for specific projects.</remarks>
+    /// <summary>Basic implementation or resource extract action supporting XAML files.</summary>
     public class GenericXamlExtractResourceAction : ExtractResourceActionBase {
 
-        /// <summary>Supports all XAML files and all projects</summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports XAML files.</returns>
         public override bool QuerySupportForProject(EnvDTE.ProjectItem item) {
             return item != null && item.Document.Language.Equals("XAML");
         }
 
-        /// <summary>
-        /// Returns the code reference to resource specified in the parameters
-        /// </summary>
+        /// <summary>Returns the code reference to resource specified in the parameters</summary>
         /// <param name="file">Resource file containing the resource</param>
         /// <param name="resourceName">Name of the resource</param>
+        /// <param name="project">Project current file belongs to</param>
+        /// <param name="string">String being extracted</param>
         /// <returns>a piece of code that would reference to the resource provided</returns>
         /// <remarks>This method does not verify if resource actually exists</remarks>
         public override string GetResourceReference(ResourceFile file, string resourceName, Project project, BaseHardCodedString @string) {
@@ -48,11 +49,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         }
 
 
-        /// <summary>
-        /// Determines the namespace of the provided resource file
-        /// </summary>
-        /// <param name="file">Reference to the resource file</param>
-        /// <returns>Namespace to be used to access the resource file</returns>
+        /// <summary>Retruns namespace prefix for a given file</summary>
+        /// <param name="file">A file to get namespace prefix for</param>
+        /// <returns>Namespace prefix for <paramref name="file"/></returns>
         protected override string GetNamespacePrefix(ResourceFile file) {
             if (file == null) {
                 throw new ArgumentNullException("file");
@@ -67,10 +66,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return namespacePrefix;
         }
 
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
+        /// <summary>This method should update properties on a recently created resource file so that it is correctly supported by the same instance of <see cref="IExtractResourceAction"/></summary>
         /// <param name="item">Project item for the resource file</param>
         public override void UpdateResourceFileProperties(ProjectItem item) {
             if (item != null) {
@@ -82,21 +78,24 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
     /// <summary>Special implementation of XAML resource extractor for Visual Basic</summary>
     public class VbExtractResourceXamlAction : GenericXamlExtractResourceAction {
+        /// <summary>Gets priority of the action.</summary>
         public override int Priority {
             get {
                 return base.Priority + 1;
             }
         }
+
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports XAML files in VB projects.</returns>
         public override bool QuerySupportForProject(EnvDTE.ProjectItem item) {
             if (item == null) return false;
             return item != null && item.Document.Language.Equals("XAML") &&
                 ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.VB &&
                 item.Document.Language.Equals("Basic");
         }
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
+
+        /// <summary>This method should update properties on a recently created resource file so that it is correctly supported by the same instance of <see cref="IExtractResourceAction"/></summary>
         /// <param name="item">Project item for the resource file</param>
         public override void UpdateResourceFileProperties(ProjectItem item) {
             base.UpdateResourceFileProperties(item);

@@ -9,44 +9,28 @@ using System.IO;
 using System.Collections.ObjectModel;
 
 namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
-    /// <summary>
-    /// An implementation of BaseHardCodedString interface for C# files. Supports both normal strings and verbatim strings.
-    /// </summary>
+    /// <summary>An implementation of <see cref="BaseHardCodedString"/> for C# files.</summary>
+    /// <remarks>Supports both normal strings and verbatim strings</remarks>
     public class CSharpHardCodedString : BaseHardCodedString {
-        /// <summary>
-        /// Cached value of the string
-        /// </summary>
+        /// <summary>Cached value of the string</summary>
         private string value;
 
-        /// <summary>
-        /// Regex object for C# comments
-        /// </summary>
+        /// <summary>Regex object for C# comments</summary>
         private static Regex commentRegexEngine = null;
 
-        /// <summary>
-        /// Constructor for hard coded strings in C#
-        /// </summary>
+        /// <summary>Constructor for hard coded strings in C#</summary>
         /// <param name="parent">Reference to code file containing the string</param>
         /// <param name="lineNumber">Line number</param>
         /// <param name="start">Starting index (including quotes)</param>
         /// <param name="end">Ending index (including quotes)</param>
-        public CSharpHardCodedString(ProjectItem parent, int start, int end)
-            :
-            base(parent, start, end) {
-        }
+        public CSharpHardCodedString(ProjectItem parent, int start, int end) : base(parent, start, end) { }
 
-        /// <summary>
-        /// Creates a new instance to use string checking functions.
-        /// </summary>
-        public CSharpHardCodedString()
-            : base() {
-        }
+        /// <summary>Creates a new instance to use string checking functions.</summary>
+        public CSharpHardCodedString() { }
 
-        #region BaseHardCodedString interface members
+        #region BaseHardCodedString members
 
-        /// <summary>
-        /// String representation of the literal, this would be the value to be placed in to resource files.
-        /// </summary>
+        /// <summary>Gets string representation of the literal, this would be the value to be placed in to resource files.</summary>
         public override string Value {
             get {
                 if (this.value == null) {
@@ -63,28 +47,20 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
-        /// <summary>
-        /// Creates another instance of CSharpHardCoded string with the provided arguments
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="lineNumber"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns></returns>
+
+        /// <summary>Creates another instance of <see cref="CSharpHardCodedString"/> with the provided arguments</summary>
+        /// <param name="parent">Current object item (file)</param>
+        /// <param name="start">Starting offset of the string</param>
+        /// <param name="end">End offset of the string</param>
+        /// <returns>A new instance of <see cref="BaseHardCodedString"/>-derived object.</returns>
         public override BaseHardCodedString CreateInstance(ProjectItem parent, int start, int end) {
             return new CSharpHardCodedString(parent, start, end);
         }
 
-        #endregion
+        /// <summary>Gets the regular expression to identify strings</summary>
+        protected override string StringRegExp { get { return Strings.RegexCSharpLiteral; } }
 
-        #region BaseHardCodedString members
-
-        protected override string StringRegExp {
-            get {
-                return Strings.RegexCSharpLiteral;
-            }
-        }
-
+        /// <summary>Gets the regular expression object sting to identify comments</summary>
         protected override Regex CommentRegularExpression {
             get {
                 if (commentRegexEngine == null) {
@@ -94,6 +70,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
+        /// <summary>Returns a collection of namespaces imported in the files ('using' keyword)</summary>
+        /// <returns>A collection of namespace imports for effective for hardcoded string location</returns>
+        /// <remarks>This list will be used to determine the replacement string</remarks>
         public override System.Collections.ObjectModel.Collection<NamespaceImport> GetImportedNamespaces() {
             Collection<NamespaceImport> importedNamespaces = new Collection<NamespaceImport>();
             try {
@@ -115,9 +94,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return importedNamespaces;
         }
 
-        /// <summary>
-        /// Recurses through code elements to find all using statements and inserts them in to the provided collection
-        /// </summary>
+        /// <summary>Recurses through code elements to find all using statements and inserts them in to the provided collection</summary>
         /// <param name="element">Code element representing either namespace or import statement</param>
         /// <param name="namespaces">Collection to ad namespaces to</param>
         private void FindUsingStatements(CodeElement element, Collection<NamespaceImport> namespaces) {

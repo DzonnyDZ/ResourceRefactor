@@ -1,4 +1,3 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
 Imports VB = Microsoft.VisualBasic
 Imports System.Resources
 Imports System.Collections.Generic
@@ -6,130 +5,81 @@ Imports EnvDTE
 Imports System.Collections.ObjectModel
 
 
-''' <summary>
-''' A class used to desribe resource match results
-''' </summary>
-''' <remarks></remarks>
+''' <summary>A class used to desribe resource match results</summary>
 Public Class ResourceMatch
 
     Private _percentage As Double
-
     Private _resourceNode As ResXDataNode
-
     Private _resourceFile As ResourceFile
 
-    ''' <summary>
-    ''' Match percentage
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets match percentage</summary>
     Public ReadOnly Property Percentage() As Double
         Get
             Return Me._percentage
         End Get
     End Property
 
-    ''' <summary>
-    ''' Name of the resource
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets name of the resource</summary>
     Public ReadOnly Property ResourceName() As String
         Get
             Return Me._resourceNode.Name
         End Get
     End Property
 
-    ''' <summary>
-    ''' Reference to ResXDataNode to retrieve value
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets reference to <see cref="ResXDataNode"/> to retrieve value</summary>
     Public ReadOnly Property ResourceNode() As ResXDataNode
         Get
             Return Me._resourceNode
         End Get
     End Property
 
-    ''' <summary>
-    ''' Value of the resource
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>gets value of the resource</summary>
     Public ReadOnly Property Value() As String
         Get
             Return Me.ResourceFile.GetValue(Me.ResourceName).ToString()
         End Get
     End Property
 
-    ''' <summary>
-    ''' Reference to the resource file containing the resource matched
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets reference to the resource file containing the resource matched</summary>
     Public ReadOnly Property ResourceFile() As ResourceFile
         Get
             Return Me._resourceFile
         End Get
     End Property
 
-    ''' <summary>
-    ''' Creates a new resource match descriptor
-    ''' </summary>
+    ''' <summary>Creates a new resource match descriptor</summary>
     ''' <param name="percentage">Match percentage</param>
     ''' <param name="node">ResXDataNode object for the resource</param>
     ''' <param name="parent">Resource file containing the resource</param>
-    ''' <remarks></remarks>
     Public Sub New(ByVal percentage As Double, ByVal node As ResXDataNode, ByVal parent As ResourceFile)
-        Me._percentage = percentage
-        Me._resourceNode = node
-        Me._resourceFile = parent
+        _percentage = percentage
+        _resourceNode = node
+        _resourceFile = parent
     End Sub
 
 End Class
 
-''' <summary>
-''' This class represents a resource file in the project. It is used to add/read entries from resource files and generic to both
-''' C# and VB.Net projects
-''' </summary>
-''' <remarks></remarks>
+''' <summary>This class represents a resource file in the project. It is used to add/read entries from resource files and generic to both C# and VB.Net projects</summary>
 Public Class ResourceFile
 
 #Region "Private Variables"
 
     Private projectItem As ProjectItem
 
-    ''' <summary>
-    ''' List of data nodes to be saved later.
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>List of data nodes to be saved later.</summary>
     Private savedDataNodes As List(Of ResXDataNode) = New List(Of ResXDataNode)
 
-    ''' <summary>
-    ''' List of metadata information read from the resource file
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>List of metadata information read from the resource file</summary>
     Private savedMetadata As New List(Of KeyValuePair(Of String, Object))
 
     Private entries As Dictionary(Of String, ResXDataNode)
-
     Private _fileNameSpace As String
 
 #End Region
 
 #Region "Public Properties"
 
-    ''' <summary>
-    ''' Gets the name to be displayed to user for this resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets the name to be displayed to user for this resource file</summary>
     Public ReadOnly Property DisplayName() As String
         Get
             If IsDefaultResXFile() Then
@@ -140,24 +90,15 @@ Public Class ResourceFile
         End Get
     End Property
 
-    ''' <summary>
-    ''' Returns the short file name form of the resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Returns the short file name form of the resource file</summary>
     Public ReadOnly Property ShortFileName() As String
         Get
             Return projectItem.Name
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets the namespace of the code file generated for this resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns>Nothing if failed, namespace otherwise</returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets the namespace of the code file generated for this resource file</summary>
+    ''' <returns>Null if failed, namespace otherwise</returns>
     Public ReadOnly Property FileNamespace() As String
         Get
             Dim namespaceValue As String = Nothing
@@ -185,12 +126,7 @@ Public Class ResourceFile
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets full path file name for the resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets full path file name for the resource file</summary>
     Public ReadOnly Property FileName() As String
         Get
             Return projectItem.FileNames(0)
@@ -198,12 +134,7 @@ Public Class ResourceFile
     End Property
 
 
-    ''' <summary>
-    ''' Gets the custom tool name property for this resource file
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets or sets the custom tool name property for this resource file</summary>
     Public Property CustomToolName() As String
         Get
             Return CStr(projectItem.Properties.Item("CustomTool").Value)
@@ -213,12 +144,7 @@ Public Class ResourceFile
         End Set
     End Property
 
-    ''' <summary>
-    ''' Gets custom tool namespace property of the resource file object
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets custom tool namespace property of the resource file object</summary>
     Public ReadOnly Property CustomToolNamespace() As String
         Get
             Dim returnValue As String = String.Empty
@@ -232,25 +158,16 @@ Public Class ResourceFile
             Return returnValue
         End Get
     End Property
-    ''' <summary>
-    ''' Returns the project item related to this resource file.
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+
+    ''' <summary>Gets the project item related to this resource file.</summary>
     Public ReadOnly Property Item() As ProjectItem
         Get
             Return Me.projectItem
         End Get
     End Property
 
-    ''' <summary>
-    ''' Returns all resources found in the resource file, keyed by the resource name
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks>This collection should be treated as a read only collection as changes to this collection will not be 
-    ''' reflected in the resource file.</remarks>
+    ''' <summary>Gets all resources found in the resource file, keyed by the resource name</summary>
+    ''' <remarks>This collection should be treated as a read only collection as changes to this collection will not be  reflected in the resource file.</remarks>
     Public ReadOnly Property Resources() As Dictionary(Of String, ResXDataNode)
         Get
             If Me.entries Is Nothing Then
@@ -262,21 +179,15 @@ Public Class ResourceFile
 
 #End Region
 
-    ''' <summary>
-    ''' Creates a new instance of ResourceFile object.
-    ''' </summary>
+    ''' <summary>Creates a new instance of <see cref="ResourceFile"/> object.</summary>
     ''' <param name="projectItem">Project item pointing to resource file in the Visual Studio project</param>
-    ''' <remarks></remarks>
     Public Sub New(ByVal projectItem As ProjectItem)
         Me.projectItem = projectItem
     End Sub
 
-    ''' <summary>
-    ''' Finds all resource entries that has a value similar to one provided
-    ''' </summary>
+    ''' <summary>Finds all resource entries that has a value similar to one provided</summary>
     ''' <param name="Text">Text to search for</param>
-    ''' <returns>A list of MatchResult objects</returns>
-    ''' <remarks></remarks>
+    ''' <returns>A list of <see cref="ResourceMatch"/> objects</returns>
     Public Function GetAllMatches(ByVal text As String) As Collection(Of ResourceMatch)
         Dim Results As New Collection(Of ResourceMatch)
         For Each resource As ResXDataNode In Me.Resources.Values
@@ -289,20 +200,18 @@ Public Class ResourceFile
         Return Results
     End Function
 
-    ''' <summary>
-    ''' Checks if this resource file is the default resource file for the project
-    ''' </summary>
+    ''' <summary>Checks if this resource file is the default resource file for the project</summary>
+    ''' <returns>True if resource file is default resource file</returns>
     Public Function IsDefaultResXFile() As Boolean
         Return Me.FileName.Contains("My Project\Resources.resx")
     End Function
 
-    ''' <summary>
-    ''' Adds a text resource to this resource file. 
-    ''' </summary>
+    ''' <summary>Adds a text resource to this resource file.</summary>
     ''' <param name="resourceName">Name of the resource</param>
     ''' <param name="resourceValue">Text that is stored in the resources</param>
     ''' <param name="resourceComment">Comment for this resource entry</param>
     ''' <remarks>Method will throw ArgumentException if a resource with the same name already exists</remarks>
+    ''' <exception cref="ArgumentException">The resource already exists</exception>
     Public Sub AddResource(ByVal resourceName As String, ByVal resourceValue As String, ByVal resourceComment As String)
         If Me.Contains(resourceName) Then
             Throw New ArgumentException("Resource already exists", "resourceName")
@@ -317,22 +226,17 @@ Public Class ResourceFile
         savedDataNodes.Add(node)
     End Sub
 
-    ''' <summary>
-    ''' Check if resource file contains a resource with the provided name
-    ''' </summary>
+    ''' <summary>Check if resource file contains a resource with the provided name</summary>
     ''' <param name="resourceName">Name of the resource to look for</param>
-    ''' <returns></returns>
+    ''' <returns>True if resource file contains a resource with the provided name; false otherwise</returns>
     ''' <remarks>Check is performed on the dictionary stored in Entries parameter. It does not include unsaved resource entries</remarks>
     Public Function Contains(ByVal resourceName As String) As Boolean
         Return Me.Resources.ContainsKey(resourceName)
     End Function
 
-    ''' <summary>
-    ''' Gets the value of a resource defined in the resource file.
-    ''' </summary>
+    ''' <summary>Gets the value of a resource defined in the resource file.</summary>
     ''' <param name="resourceName">Name of the resource</param>
     ''' <returns>The value for the resource, or ArgumentException if resource is not defined</returns>
-    ''' <remarks></remarks>
     ''' <exception cref="System.ArgumentException">Throws ArgumentException if resource could not be located as resource values can be null</exception>
     Public Function GetValue(ByVal resourceName As String) As Object
         If Not Me.Contains(resourceName) Then
@@ -341,10 +245,7 @@ Public Class ResourceFile
         Return Me.Resources(resourceName).GetValue(New System.Reflection.AssemblyName() {})
     End Function
 
-    ''' <summary>
-    ''' Saves changes to the resource file.
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Saves changes to the resource file.</summary>
     Public Sub SaveFile()
         Dim writer As ResXResourceWriter = Nothing
         Try
@@ -383,10 +284,7 @@ Public Class ResourceFile
         Me.RunCustomTool()
     End Sub
 
-    ''' <summary>
-    ''' Request the custom tool for project item assigned to this resource to be executed
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Request the custom tool for project item assigned to this resource to be executed</summary>
     Public Sub RunCustomTool()
         If Me.projectItem IsNot Nothing Then
             Dim VsProjectItem As VSLangProj.VSProjectItem = TryCast(projectItem.Object, VSLangProj.VSProjectItem)
@@ -396,10 +294,7 @@ Public Class ResourceFile
         End If
     End Sub
 
-    ''' <summary>
-    ''' Refresh the dictionary of resource entries from the latest copy of the file
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Refresh the dictionary of resource entries from the latest copy of the file</summary>
     Public Sub Refresh()
         Me.entries = New Dictionary(Of String, ResXDataNode)(System.StringComparer.InvariantCultureIgnoreCase)
         Using reader As ResXResourceReader = New ResXResourceReader(Me.FileName)
@@ -416,16 +311,16 @@ Public Class ResourceFile
         End Using
     End Sub
 
+    ''' <summary>Returns a string that represents the current object.</summary>
+    ''' <returns>A string that represents the current object.</returns>
+    ''' <filterpriority>2</filterpriority>
     Public Overrides Function ToString() As String
         Return Me.DisplayName
     End Function
 
-    ''' <summary>
-    ''' Recurses in to code elements to find a Namespace element
-    ''' </summary>
+    ''' <summary>Recurses in to code elements to find a Namespace element</summary>
     ''' <param name="element">Code element to recurse into</param>
     ''' <returns>Namespace code element if one found, Nothing (null) otherwise</returns>
-    ''' <remarks></remarks>
     Private Shared Function FindNamespaceElement(ByVal element As CodeElement) As CodeElement
         Dim returnElement As CodeElement = Nothing
         If element.Kind = vsCMElement.vsCMElementNamespace Then
@@ -441,4 +336,3 @@ Public Class ResourceFile
         Return returnElement
     End Function
 End Class
-

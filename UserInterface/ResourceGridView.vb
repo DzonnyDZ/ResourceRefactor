@@ -1,20 +1,12 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
 Imports System.Windows.Forms
 Imports System.Resources
 
-''' <summary>
-''' An extension to grid view for displayin resource entries
-''' </summary>
-''' <remarks></remarks>
+''' <summary>An extension to grid view for displayin resource entries</summary>
 Public Class ResourceGridView
     Inherits System.Windows.Forms.DataGridView
 
-    ''' <summary>
-    ''' Returns the selected resource entry's name
-    ''' </summary>
-    ''' <value></value>
+    ''' <summary>Gets the selected resource entry's name</summary>
     ''' <returns>Returns a non empty string for name, or Nothing if no row is selected</returns>
-    ''' <remarks></remarks>
     Public ReadOnly Property SelectedResourceName() As String
         Get
             If Me.SelectedRows.Count > 0 Then
@@ -25,12 +17,7 @@ Public Class ResourceGridView
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets if currently selected row is an exact match to the text being refactored
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets if currently selected row is an exact match to the text being refactored</summary>
     Public ReadOnly Property ExactMatchSelected() As Boolean
         Get
             Dim result As Boolean = False
@@ -42,10 +29,7 @@ Public Class ResourceGridView
         End Get
     End Property
 
-    ''' <summary>
-    ''' Initializes the default settings for the grid view
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Initializes the default settings for the grid view</summary>
     Protected Overrides Sub InitLayout()
         MyBase.InitLayout()
         Me.AllowUserToAddRows = False
@@ -58,12 +42,9 @@ Public Class ResourceGridView
         Me.AutoGenerateColumns = False
     End Sub
 
-    ''' <summary>
-    ''' Binds data from resource file to grid view
-    ''' </summary>
+    ''' <summary>Binds data from resource file to grid view</summary>
     ''' <param name="resources">Resource file to use for getting data</param>
     ''' <param name="stringInstance">If not Nothing, resource list is filtered by this hard coded string to list only similar ones</param>
-    ''' <remarks></remarks>
     Public Sub BindData(ByVal resources As Common.ResourceFile, ByVal stringInstance As Common.BaseHardCodedString)
         If resources IsNot Nothing Then
             Me.DataSource = Nothing
@@ -102,11 +83,8 @@ Public Class ResourceGridView
         End If
     End Sub
 
-    ''' <summary>
-    ''' Formats the similarity column and determines what to display based on similarity percentage
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
+    ''' <summary>Formats the similarity column and determines what to display based on similarity percentage</summary>
+    ''' <param name="e">Event argumnents</param>
     Protected Overrides Sub OnCellFormatting(ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs)
         If e.ColumnIndex = 2 Then
             Dim matchPercentage As Double = CType(e.Value, Double)
@@ -123,11 +101,8 @@ Public Class ResourceGridView
         MyBase.OnCellFormatting(e)
     End Sub
 
-    ''' <summary>
-    ''' Checks if a row added is an exact match and if so selects the row
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <remarks>CA1817: Suppressed because currentRowView changes in each iteration.</remarks>
+    ''' <summary>Checks if a row added is an exact match and if so selects the row</summary>
+    ''' <param name="e">Event arguments</param>
     <System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1817:DoNotCallPropertiesThatCloneValuesInLoops")> _
     Protected Overrides Sub OnRowsAdded(ByVal e As System.Windows.Forms.DataGridViewRowsAddedEventArgs)
         For i As Integer = 0 To e.RowCount - 1

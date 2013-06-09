@@ -12,7 +12,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
     /// has a very low priority so other implementations can be used instead for specific projects.</remarks>
     public class GenericCSharpExtractResourceAction : ExtractResourceActionBase {
 
-        /// <summary>Supports all C# files and C# projects</summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports all C# projects.</returns>
         public override bool QuerySupportForProject(EnvDTE.ProjectItem item) {
             if (item == null) return false;
             return ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.CSharp && item.Document.Language.Equals("CSharp");
@@ -57,10 +59,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return reference;
         }
 
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
+        /// <summary>This method should update properties on a recently created resource file so that it is correctly supported by the same instance of <see cref="IExtractResourceAction"/></summary>
         /// <param name="item">Project item for the resource file</param>
         public override void UpdateResourceFileProperties(ProjectItem item) {
             if (item != null) {
@@ -70,8 +69,12 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         }
     }
 
+    /// <summary>Implements <see cref="GenericCSharpExtractResourceAction"/> for Razor CSHTML files</summary>
     public class CSharpRazorExtractResourceAction : GenericCSharpExtractResourceAction {
 
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
+        /// <param name="item">Project item to query support for</param>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports CSHTML files.</returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             if (item == null) return false;
             return
@@ -85,89 +88,52 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
     public class WebsiteCSharpExtractResourceAction : GenericCSharpExtractResourceAction {
         #region IExtractResourceAction Members
 
-        /// <summary>
-        /// Priority of the action. If there are multiple actions supporting the same item, action with
-        /// the highest priority will be selected
-        /// </summary>
-        public override int Priority {
-            get { return 50; }
-        }
+        /// <summary>Gets priority of the action.</summary>
+        public override int Priority { get { return 50; } }
 
-        /// <summary>
-        /// Gets the default relative path for resource file.
-        /// </summary>
-        public override string DefaultResourceFilePath {
-            get {
-                return "App_GlobalResources";
-            }
-        }
+        /// <summary>Gets the default relative path for resource file.</summary>
+        public override string DefaultResourceFilePath { get { return "App_GlobalResources"; } }
 
-        /// <summary>
-        /// Queries if this action supports the provided project item and its containing project
-        /// </summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
         /// <param name="item">Project item to query support for</param>
-        /// <returns></returns>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports C# web projects.</returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             return
                 item != null && item.Document.Language.Equals("CSharp") &&
                 ExtensibilityMethods.GetProjectType(item.ContainingProject) == ProjectType.WebProject;
         }
 
-        /// <summary>
-        /// This method will be used for filtering resource files displayed to user
-        /// </summary>
+        /// <summary>This method will be used for filtering resource files displayed to user</summary>
         /// <param name="item">Project item for the resource file</param>
         /// <returns>true if resource file is valid and should be displayed to user</returns>
-        public override bool IsValidResourceFile(ProjectItem item) {
-            return CheckResourceFileForWebSites(item);
-        }
+        public override bool IsValidResourceFile(ProjectItem item) { return CheckResourceFileForWebSites(item); }
 
         #endregion
 
-        /// <summary>
-        /// Determines the namespace of the provided resource file
-        /// </summary>
+        /// <summary>Determines the namespace of the provided resource file</summary>
         /// <param name="file">Reference to the resource file</param>
         /// <returns>Namespace to be used to access the resource file</returns>
-        protected override string GetNamespacePrefix(ResourceFile file) {
-            return "Resources.";
-        }
+        protected override string GetNamespacePrefix(ResourceFile file) { return "Resources."; }
 
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
+        /// <summary>This method should update properties on a recently created resource file so that it is correctly supported by the same instance of <see cref="IExtractResourceAction"/></summary>
         /// <param name="item">Project item for the resource file</param>
-        public override void UpdateResourceFileProperties(ProjectItem item) {
-        }
+        /// <remarks>This implementation does nothing</remarks>
+        public override void UpdateResourceFileProperties(ProjectItem item) { }
     }
 
     /// <summary>Implementation supporting C# file and web application projects.</summary>
     public class WebApplicationCSharpExtractResourceAction : GenericCSharpExtractResourceAction {
         #region IExtractResourceAction Members
 
-        /// <summary>
-        /// Priority of the action. If there are multiple actions supporting the same item, action with
-        /// the highest priority will be selected
-        /// </summary>
-        public override int Priority {
-            get { return 50; }
-        }
+        /// <summary>Gets priority of the action.</summary>
+        public override int Priority {                                 get { return 50; }        }
 
-        /// <summary>
-        /// Gets the default relative path for resource file.
-        /// </summary>
-        public override string DefaultResourceFilePath {
-            get {
-                return "App_GlobalResources";
-            }
-        }
+        /// <summary>Gets the default relative path for resource file.</summary>
+        public override string DefaultResourceFilePath {get {return "App_GlobalResources";}}
 
-        /// <summary>
-        /// Queries if this action supports the provided project item and its containing project
-        /// </summary>
+        /// <summary>Queries if this action supports the provided project item and its containing project</summary>
         /// <param name="item">Project item to query support for</param>
-        /// <returns></returns>
+        /// <returns>True if the action is supported, false otherwise. This implementation supports all C# projects.</returns>
         public override bool QuerySupportForProject(ProjectItem item) {
             if (item == null) return false;
             bool returnValue = base.QuerySupportForProject(item);
@@ -184,9 +150,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             return returnValue && extenderFound;
         }
 
-        /// <summary>
-        /// This method will be used for filtering resource files displayed to user
-        /// </summary>
+        /// <summary>This method will be used for filtering resource files displayed to user</summary>
         /// <param name="item">Project item for the resource file</param>
         /// <returns>true if resource file is valid and should be displayed to user</returns>
         public override bool IsValidResourceFile(ProjectItem item) {
@@ -195,9 +159,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         #endregion
 
-        /// <summary>
-        /// Determines the namespace of the provided resource file
-        /// </summary>
+        /// <summary>Determines the namespace of the provided resource file</summary>
         /// <param name="file">Reference to the resource file</param>
         /// <returns>Namespace to be used to access the resource file</returns>
         protected override string GetNamespacePrefix(ResourceFile file) {
@@ -208,10 +170,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
-        /// <summary>
-        /// This method should update properties on a recently created resource file so that it
-        /// is correctly supported by the same instance of IExtractResourceAction
-        /// </summary>
+        /// <summary>This method should update properties on a recently created resource file so that it is correctly supported by the same instance of <see cref="IExtractResourceAction"/></summary>
         /// <param name="item">Project item for the resource file</param>
         public override void UpdateResourceFileProperties(ProjectItem item) {
             if (item != null) {
@@ -225,11 +184,10 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
-        /// <summary>
-        /// Checks if resource file is a valid content resource file used in web application projects
-        /// These resource files must be located in App_GlobalResources directory
-        /// </summary>
-        /// <returns></returns>
+        /// <summary>Checks if resource file is a valid content resource file used in web application projects</summary>
+        /// <param name="item">An item to check</param>
+        /// <returns>True if <paramref name="file"/> is a valid content resource file used in web application projects; false otherwise</returns>
+        /// <remarks>These resource files must be located in App_GlobalResources directory</remarks>
         public static bool IsValidContentResourceFile(ProjectItem item) {
             if (item == null) return false;
             try {
@@ -247,11 +205,10 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
         }
 
-        /// <summary>
-        /// Gets the relative path of the item in the project
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <summary>Gets the relative path of the item in the project</summary>
+        /// <param name="item">An item to get relative path for</param>
+        /// <returns>A relative path of <paramref name="item"/></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is null</exception>
         public static string GetRelativePathForItem(ProjectItem item) {
             if (item == null) {
                 throw new ArgumentNullException("item");

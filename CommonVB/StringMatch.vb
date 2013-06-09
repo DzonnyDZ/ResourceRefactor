@@ -1,29 +1,21 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
-
-''' <summary>
-''' Contains method to match strings approximatlely
-''' </summary>
-''' <remarks></remarks>
+''' <summary>Contains method to match strings approximatlely</summary>
 Public NotInheritable Class StringMatch
 
     'A match is rated from 0 (not at all) to 1.0 (exact)
+    ''' <summary>Rating for "not matches at all"</summary>
     Public Const NoMatch As Double = 0.0
+    ''' <summary>Rating for matches completelly</summary>
     Public Const ExactMatch As Double = 1.0
 
     'Private-use constants - external clients should simply sort the values and not check against these constants
+    ''' <summary>Rating for exact matches with different casing</summary>
     Private Const ExactMatchDiffersByCase As Double = 0.95
 
-    ''' <summary>
-    ''' Private constructor to avoid any public constructors
-    ''' </summary>
-    ''' <remarks></remarks>
-    Private Sub New()
-
+    ''' <summary>Private constructor to avoid any public constructors</summary>
+    Partial Private Sub New()
     End Sub
 
-    ''' <summary>
-    ''' Calculates a match value for two strings (using Levinsthein algorithm)
-    ''' </summary>
+    ''' <summary>Calculates a match value for two strings (using Levinsthein algorithm)</summary>
     ''' <param name="original">Original string to compare against</param>
     ''' <param name="other">String to compare</param>
     ''' <returns>A double indicating match result (1.0 being an exact match)</returns>
@@ -54,13 +46,10 @@ Public NotInheritable Class StringMatch
         Return 1 - (distance / maxLength)
     End Function
 
-    ''' <summary>
-    ''' Returns the Levenshtein difference between 2 strings
-    ''' </summary>
+    ''' <summary>Returns the Levenshtein difference between 2 strings</summary>
     ''' <param name="original">String to start with</param>
     ''' <param name="other">String trying to end up with</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>Levenshtein difference between <paramref name="original"/> and <paramref name="other"/></returns>
     Public Shared Function CalculateDistance(ByVal original As String, ByVal other As String) As Integer
         If original Is Nothing Then
             Throw New ArgumentNullException("original")
@@ -96,14 +85,11 @@ Public NotInheritable Class StringMatch
         Return CType(upperRow(other.Length) / 2, Integer)
     End Function
 
-    ''' <summary>
-    ''' Returns the minimum of 3 numbers
-    ''' </summary>
-    ''' <param name="d1"></param>
-    ''' <param name="d2"></param>
-    ''' <param name="d3"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Returns the minimum of 3 numbers</summary>
+    ''' <param name="d1">An <paramref name="integer"/> number</param>
+    ''' <param name="d2">An <paramref name="integer"/> number</param>
+    ''' <param name="d3">An <paramref name="integer"/> number</param>
+    ''' <returns>Minimum of <paramref name="d1"/>, <paramref name="d2"/> and <paramref name="d3"/></returns>
     Private Shared Function Min(ByVal d1 As Integer, ByVal d2 As Integer, ByVal d3 As Integer) As Integer
         If d1 <= d2 And d1 <= d3 Then
             Return d1

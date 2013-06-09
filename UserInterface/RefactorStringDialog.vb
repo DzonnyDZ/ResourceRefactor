@@ -2,24 +2,15 @@
 Imports System.Windows.Forms
 Imports System.Collections.ObjectModel
 
-''' <summary>
-''' This is the main dialog for the resource refactoring tool.
-''' </summary>
-''' <remarks></remarks>
+''' <summary>This is the main dialog for the resource refactoring tool.</summary>
 Public Class RefactorStringDialog
 
-    ''' <summary>
-    ''' Hard coded string instance to refactor
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Hard coded string instance to refactor</summary>
     Private stringToRefactor As Common.BaseHardCodedString
 
-    ''' <summary>
-    ''' Shows the refactor string dialog
-    ''' </summary>
+    ''' <summary>Shows the refactor string dialog</summary>
     ''' <param name="refactorSite">Site to be refactored</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>Dialog result</returns>
     Public Shadows Function ShowDialog(ByVal refactorSite As Common.ExtractToResourceActionSite) As DialogResult
         If refactorSite Is Nothing Then
             Throw New ArgumentNullException("refactorSite")
@@ -33,12 +24,9 @@ Public Class RefactorStringDialog
         Return MyBase.ShowDialog()
     End Function
 
-    ''' <summary>
-    ''' Handles OK button click event, prepares a collection of BaseHardCodedString instances and replaces them with the resource
-    ''' user has choosen.
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
+    ''' <summary>Handles OK button click event, prepares a collection of BaseHardCodedString instances and replaces them with the resource user has choosen.''' </summary>
+    ''' <param name="sender">Source of the event</param>
+    ''' <param name="e">Event argument</param>
     ''' <remarks>As localization is not supported right now, CA1300 is suppressed.</remarks>
     <System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")> _
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
@@ -81,9 +69,7 @@ Public Class RefactorStringDialog
         End If
     End Sub
 
-    ''' <summary>
-    ''' Replace all instances of text in the list with a reference to provided resource entry
-    ''' </summary>
+    ''' <summary>Replace all instances of text in the list with a reference to provided resource entry</summary>
     ''' <param name="list">Collection of BaseHardCodedString objects</param>
     ''' <param name="resourceFile">File containing the resource entry</param>
     ''' <param name="resourceName">Name of the resource entry</param>
@@ -105,15 +91,11 @@ Public Class RefactorStringDialog
                 Next
                 result = True
             Catch exception As Common.FileCheckoutException
-                MessageBox.Show(String.Format(System.Globalization.CultureInfo.CurrentUICulture, _
-                                My.Resources.Strings.FileCheckoutError, exception.FileName), _
-                                My.Resources.Strings.ErrorCaption, _
-                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(String.Format(System.Globalization.CultureInfo.CurrentUICulture, My.Resources.Strings.FileCheckoutError, exception.FileName),
+                                My.Resources.Strings.ErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch exception As Common.FileReadOnlyException
-                MessageBox.Show(String.Format(System.Globalization.CultureInfo.CurrentUICulture, _
-                                My.Resources.Strings.FileReadOnlyError, exception.FileName), _
-                                My.Resources.Strings.ErrorCaption, _
-                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(String.Format(System.Globalization.CultureInfo.CurrentUICulture, My.Resources.Strings.FileReadOnlyError, exception.FileName),
+                                My.Resources.Strings.ErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
         End If
@@ -129,9 +111,7 @@ Public Class RefactorStringDialog
         System.Diagnostics.Process.Start(My.Resources.Strings.SendFeedbackURL)
     End Sub
 
-    ''' <summary>
-    ''' Loads user settings from the assembly settings file
-    ''' </summary>
+    ''' <summary>Loads user settings from the assembly settings file</summary>
     ''' <param name="resourceFiles">Initial list of resource files to get the last selected resource file</param>
     Private Sub LoadSettings(ByVal resourceFiles As Common.ResourceFileCollection)
         Me.uxPreviewCheckbox.Checked = My.Settings.PreviewChangesChecked
@@ -145,9 +125,7 @@ Public Class RefactorStringDialog
         End If
     End Sub
 
-    ''' <summary>
-    ''' Saves user settings to the assembly settings file
-    ''' </summary>
+    ''' <summary>Saves user settings to the assembly settings file</summary>
     Private Sub SaveSettings()
         If Me.options.SelectedResourceFile IsNot Nothing Then
             My.Settings.MostRecentResourceFileName = Me.options.SelectedResourceFile.DisplayName

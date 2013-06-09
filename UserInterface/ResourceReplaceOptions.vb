@@ -1,25 +1,18 @@
-' Copyright (c) Microsoft Corporation.  All rights reserved.
 Imports System.Windows.Forms
+Imports System.Text.RegularExpressions
 
-''' <summary>
-''' This form collects all the information needed to replace strings with resource references in the code.
-''' It contains resource file dropdowns and resource entry selection controls.
-''' </summary>
-''' <remarks></remarks>
+''' <summary>This form collects all the information needed to replace strings with resource references in the code.</summary>
+''' <remarks>It contains resource file dropdowns and resource entry selection controls.</remarks>
 Public Class ResourceReplaceOptions
 
-    ''' <summary>
-    ''' This event is raised when user changes their resource selection
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>This event is raised when user changes their resource selection</summary>
     Public Event ResourceSelectionChanged As EventHandler(Of ResourceSelectionChangedEventArgs)
 
     Private _stringInstance As Common.BaseHardCodedString
     Private _resources As Common.ResourceFileCollection
-    Private resourceNameRegExp As System.Text.RegularExpressions.Regex = _
-        New System.Text.RegularExpressions.Regex(My.Resources.Strings.ResourceNameValidationRegExp, _
-        System.Text.RegularExpressions.RegexOptions.Compiled)
+    Private resourceNameRegExp As Regex = New System.Text.RegularExpressions.Regex(My.Resources.Strings.ResourceNameValidationRegExp, RegexOptions.Compiled)
 
+    ''' <summary>CTor - creates a new instance of the <see cref="ResourceReplaceOptions"/> class</summary>
     Public Sub New()
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
@@ -28,12 +21,7 @@ Public Class ResourceReplaceOptions
 
 #Region "Public Properties"
 
-    ''' <summary>
-    ''' Gets or sets the selected resource file.
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets or sets the selected resource file.</summary>
     Public Property SelectedResourceFile() As Common.ResourceFile
         Get
             Return Me.uxResourceFileSelector.SelectedResourceFile
@@ -46,12 +34,7 @@ Public Class ResourceReplaceOptions
         End Set
     End Property
 
-    ''' <summary>
-    ''' Gets the resource entry name to be used during refactoring
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets the resource entry name to be used during refactoring</summary>
     Public ReadOnly Property SelectedResourceName() As String
         Get
             If Me.uxCreateNewResource.Checked Then
@@ -62,24 +45,14 @@ Public Class ResourceReplaceOptions
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets if user has selected to create the resource entry
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets if user has selected to create the resource entry</summary>
     Public ReadOnly Property IsCreateResourceChecked() As Boolean
         Get
             Return Me.uxCreateNewResource.Checked
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets or sets the options selected by user in the dialog
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <summary>Gets or sets the options selected by user in the dialog</summary>
     Public Property Options() As ResourceReplaceOption
         Get
             If Me.uxOptionChangeAll.Checked Then
@@ -103,13 +76,9 @@ Public Class ResourceReplaceOptions
 
 #End Region
 
-    ''' <summary>
-    ''' Initializes the control to display resource files in the provided collection and show options
-    ''' for hard coded string user selected
-    ''' </summary>
+    ''' <summary>Initializes the control to display resource files in the provided collection and show options for hard coded string user selected</summary>
     ''' <param name="refactorSite">Site object defining current string to refactor and action to perform</param>
     ''' <param name="resourceFiles">Resource file collection for the project</param>
-    ''' <remarks></remarks>
     Public Sub DisplayMatchOptions(ByVal refactorSite As Common.ExtractToResourceActionSite, ByVal resourceFiles As Common.ResourceFileCollection)
         If refactorSite Is Nothing Then
             Throw New ArgumentNullException("refactorSite")
@@ -125,12 +94,9 @@ Public Class ResourceReplaceOptions
         Me.SetResourceGridView()
     End Sub
 
-    ''' <summary>
-    ''' Returns a suggested resource name for the given value of the resource
-    ''' </summary>
+    ''' <summary>Returns a suggested resource name for the given value of the resource</summary>
     ''' <param name="stringValue">Value of the resource to generate a name for</param>
     ''' <returns>a String that can be used as a resource name</returns>
-    ''' <remarks></remarks>
     Private Shared Function CreateSuggestedResourceName(ByVal stringValue As String) As String
         Dim sb As New System.Text.StringBuilder(stringValue.Length)
         Dim firstLetterOfWord As Boolean = True
@@ -157,14 +123,11 @@ Public Class ResourceReplaceOptions
         Return sb.ToString()
     End Function
 
-    Private Sub OnResourceFileSelectionChange(ByVal sender As Object, ByVal e As EventArgs) Handles uxResourceFileSelector.SelectionChanged
+    Private Sub uxResourceFileSelector_SelectionChanged(ByVal sender As Object, ByVal e As EventArgs) Handles uxResourceFileSelector.SelectionChanged
         Me.SetResourceGridView()
     End Sub
 
-    ''' <summary>
-    ''' Sets the resource grid view according to resource file selection and filtering option selected
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Sets the resource grid view according to resource file selection and filtering option selected</summary>
     Private Sub SetResourceGridView()
         Me.uxResourceView.BindData(uxResourceFileSelector.SelectedResourceFile, Me._stringInstance)
         Me.uxCreateNewResource.Checked = _
@@ -187,10 +150,7 @@ Public Class ResourceReplaceOptions
         Me.RaiseSelectionChangedEvent()
     End Sub
 
-    ''' <summary>
-    ''' Raises SelectionChanged Event with correct arguments
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Raises <see cref="ResourceSelectionChanged"/> event with correct arguments</summary>
     Private Sub RaiseSelectionChangedEvent()
         If Me.uxResourceFileSelector.SelectedResourceFile IsNot Nothing Then
             Dim name As String
@@ -211,12 +171,9 @@ Public Class ResourceReplaceOptions
         End If
     End Sub
 
-    ''' <summary>
-    ''' Validates the resource name using regular expressions.
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
+    ''' <summary>Validates the resource name using regular expressions.</summary>
+    ''' <param name="sender">Source of the event</param>
+    ''' <param name="e">Event arguments</param>
     Private Sub uxNewResourceName_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles uxNewResourceName.Validating
         If Me.uxCreateNewResource.Checked Then
             If (Not Me.resourceNameRegExp.IsMatch(Me.uxNewResourceName.Text)) Then
@@ -234,36 +191,28 @@ Public Class ResourceReplaceOptions
     End Sub
 End Class
 
+''' <summary>Event arguments of an event raised when resource selection changes</summary>
 Public Class ResourceSelectionChangedEventArgs
     Inherits EventArgs
 
     Private _file As Common.ResourceFile
     Private _name As String
 
-    ''' <summary>
-    ''' Resource file user has selected
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Gets resource file user has selected</summary>
     Public ReadOnly Property ResourceFile() As Common.ResourceFile
         Get
             Return _file
         End Get
     End Property
 
-    ''' <summary>
-    ''' Resource name user has selected
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Gets resource name user has selected</summary>
     Public ReadOnly Property ResourceName() As String
         Get
             Return _name
         End Get
     End Property
 
-    ''' <summary>
-    ''' Creates a new argument object
-    ''' </summary>
-    ''' <remarks></remarks>
+    ''' <summary>Gets creates a new argument object</summary>
     Public Sub New(ByVal resourceFile As Common.ResourceFile, ByVal resourceName As String)
         MyBase.New()
         Me._file = resourceFile
@@ -272,12 +221,12 @@ Public Class ResourceSelectionChangedEventArgs
 
 End Class
 
-''' <summary>
-''' Enum to define options for resource refactoring
-''' </summary>
-''' <remarks></remarks>
+''' <summary>Enum to define options for resource refactoring</summary>
 Public Enum ResourceReplaceOption
+    ''' <summary>Replace olny surrent instance</summary>
     ReplaceCurrentInstance
+    ''' <summary>Replace all occurences in current file</summary>
     ReplaceCurrentFileOnly
+    ''' <summary>Replaces all instances in current project</summary>
     ReplaceAllInstances
 End Enum
