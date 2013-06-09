@@ -63,6 +63,14 @@
       <Project>{1e3665fd-a8de-4452-a915-7d87a395a85f}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Common\CommonCSharp.csproj">
+      <Name>CommonCSharp</Name>
+      <Project>{7d309aef-2601-4b12-8a34-fd9ba595afb3}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\UserInterface\UserInterface.vbproj">
       <Name>UserInterface</Name>
       <Project>{146279aa-6950-44f1-86a4-3f5209806e0e}</Project>

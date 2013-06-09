@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
-    <Product Name='Power Toys for Visual Studio - Resource Refactoring Tool' Id='B5F6D97D-96DF-42b5-B2BD-0379B6AFAFE0'
-             Language='1033' Codepage='1252' Version='3.0.0' Manufacturer='Microsoft Corporation'
-             UpgradeCode='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
+    <Product Name='Visual Studio Resource Refactoring Tool' Id='B5F6D97D-96DF-42b5-B2BD-0379B6AFAFE0'
+             Language='1033' Codepage='1252' Version='3.0.0' Manufacturer='Microsoft Corporation / ?onny'
+             UpgradeCode='0056A67A-E37F-411d-858C-9058AF1C400E'>
 
         <Package Id='*'
                  Keywords='Installer'
-                 Comments='Resource Refactoring Tool for Visual Studio 2005/8/10/12 allows developers to easily convert string literals in to resources.'
+                 Comments='Resource Refactoring Tool for Visual Studio 2010/12 allows developers to easily convert string literals in to resources.'
                  Manufacturer='Microsoft Corporation'
                  InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
 
-        <Upgrade Id='B656A67A-E37F-411d-858C-9058AF1C4C1E'>
+        <Upgrade Id='0056A67A-E37F-411d-858C-9058AF1C400E'>
             <UpgradeVersion Minimum="3.0.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
             <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="3.0.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
         </Upgrade>
@@ -33,15 +33,7 @@
         <Condition Message="You need to be an administrator to install this product.">
             Privileged
         </Condition>
-
-        <Property Id="VS2005">
-            <RegistrySearch Id="VS2005Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0" Name="ApplicationID" />
-        </Property>
-
-        <Property Id="VS2008">
-            <RegistrySearch Id="VS2008Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0" Name="ApplicationID" />
-        </Property>
-
+       
         <Property Id="VS2010">
             <RegistrySearch Id="VS2010Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\10.0" Name="ApplicationID" />
         </Property>
@@ -55,7 +47,7 @@
         </Property>
 
         <Condition Message="Resource Refactoring Tool requires Visual Studio 2005/8/10/12, which is not present on the computer.">
-          VS2005 = "VisualStudio" OR VS2008 = "VisualStudio" OR VS2010 = "VisualStudio" OR VS2012 = "VisualStudio"
+          VS2010 = "VisualStudio" OR VS2012 = "VisualStudio"
         </Condition>
 
         <Media Id='1' Cabinet='ResourceRefactor.cab' EmbedCab='yes' />
@@ -66,9 +58,7 @@
                     <Directory Id='MSEnvSharedFolder' Name='MSEnvShared' >
                         <Directory Id='AddinsFolder' Name='Addins'>
                             <Component Id='ResourceRefactoringAddin' Guid='38CA9324-C652-479a-B95A-B24318731091'>
-                                <File Id='ResourceRefactorAddinFile' Name='ResourceRefactor.AddIn' DiskId='1'
-                                      Source='$(var.Addin.TargetDir)\ResourceRefactor.AddIn' Vital='yes'>
-                                </File>
+                                <File Id='ResourceRefactorAddinFile' Name='ResourceRefactor.AddIn' DiskId='1' Source='$(var.Addin.TargetDir)\ResourceRefactor.AddIn' Vital='yes'/>
 
                                 <XmlFile xmlns='http://schemas.microsoft.com/wix/UtilExtension'
                                          Id="Addin.Location"
@@ -87,15 +77,10 @@
                 <Directory Id='PowerToysFolder' Name='Power Toys for Visual Studio'>
                     <Directory Id='INSTALLDIR' Name='Resource Refactoring Tool' src='$(var.Addin.TargetDir)'>
                         <Component Id='ResourceRefactorCore' Guid='EFD35723-EEC4-455a-8341-185FA2865B87'>
-                            <File Id='File1' Name='Microsoft.VSPowerToys.ResourceRefactor.dll' DiskId='1'
-                                    Vital='yes'>
-                            </File>
-                            <File Id='File2' Name='ResourceRefactor.Common.CSharp.dll' DiskId='1' Vital='yes'>
-                            </File>
-                            <File Id='File3' Name='ResourceRefactor.Common.VB.dll' DiskId='1' Vital='yes' Source='$(var.CommonVB.TargetDir)ResourceRefactor.Common.VB.dll'>
-                            </File>
-                            <File Id='File4' Name='ResourceRefactor.UserInterface.dll' DiskId='1' Vital='yes' Source='$(var.UserInterface.TargetDir)ResourceRefactor.UserInterface.dll' >
-                            </File>
+                            <File Id='File1' Name='Microsoft.VSPowerToys.ResourceRefactor.dll' DiskId='1' Vital='yes' Source='$(var.Addin.TargetDir)Microsoft.VSPowerToys.ResourceRefactor.dll'/>
+                            <File Id='File2' Name='ResourceRefactor.Common.CSharp.dll' DiskId='1' Vital='yes' Source='$(var.CommonCSharp.TargetDir)ResourceRefactor.Common.CSharp.dll'/>
+                            <File Id='File3' Name='ResourceRefactor.Common.VB.dll' DiskId='1' Vital='yes' Source='$(var.CommonVB.TargetDir)ResourceRefactor.Common.VB.dll'/>
+                            <File Id='File4' Name='ResourceRefactor.UserInterface.dll' DiskId='1' Vital='yes' Source='$(var.UserInterface.TargetDir)ResourceRefactor.UserInterface.dll' />
                         </Component>
                     </Directory>
                 </Directory>
@@ -143,9 +128,9 @@
 
         <Property Id="ARPPRODUCTICON">arpicon.ico</Property>
         <Icon Id="arpicon.ico" SourceFile="Bitmaps\powertoys.ico" />
-        <Property Id="ARPHELPLINK"><![CDATA[http://resourcerefactoring.codeplex.com/]]></Property>
-        <Property Id="ARPURLINFOABOUT"><![CDATA[http://resourcerefactoring.codeplex.com/]]></Property>
-        <Property Id="ARPCONTACT"><![CDATA[Microsoft Corporation]]></Property>
+        <Property Id="ARPHELPLINK"><![CDATA[https://resourcerefactor.codeplex.com/]]></Property>
+        <Property Id="ARPURLINFOABOUT"><![CDATA[https://resourcerefactor.codeplex.com/]]></Property>
+        <Property Id="ARPCONTACT"><![CDATA[Microsoft Corporation / ?onny]]></Property>
         <Property Id="ARPCOMMENTS"><![CDATA[Resource Refactoring Tool for Visual Studio allows developers to easily convert string literals in to resources.]]></Property>
 
     </Product>
