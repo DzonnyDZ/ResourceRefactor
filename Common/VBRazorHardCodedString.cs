@@ -24,7 +24,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         /// <summary>Creates another instance of <see cref="VBRazorHardCodedString"/> string with the provided arguments</summary>
         public override BaseHardCodedString CreateInstance(ProjectItem parent, int start, int end) {
-            return new VBRazorHardCodedString(parent, start, end);
+            VBRazorHardCodedString newInstance = new VBRazorHardCodedString(parent, start, end);
+            newInstance.InitializeValue();
+            return newInstance;
         }
 
         /// <summary>Gets the regular expression to identify strings</summary>
@@ -39,20 +41,24 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// <summary>Indicates if Razor @ prefix is required</summary>
         private bool needsRazorPrefix = false;
 
+        private void InitializeValue() {
+            this.value = this.BeginEditPoint.GetText(this.TextLength);
+            if (this.value.StartsWith("\"")) {
+                // String in quotes.
+                this.value = value.Substring(1, value.Length - 2);
+                value = Regex.Unescape(value);
+            }
+            else {
+                // String in html tags.
+                this.value = value.Trim();
+                this.needsRazorPrefix = true;
+            }
+        }
         /// <summary>When overrden in derived class gets actual value of the string (without quotes and with special characters replaced)</summary>
         public override string Value {
             get {
                 if (this.value == null) {
-                    this.value = this.BeginEditPoint.GetText(this.TextLength);
-                    if (this.value.StartsWith("\"")) {
-                        // String in quotes.
-                        this.value = value.Substring(1, value.Length - 2);
-                        value = Regex.Unescape(value);
-                    } else {
-                        // String in html tags.
-                        this.value = value.Trim();
-                        this.needsRazorPrefix = true;
-                    }
+                    InitializeValue();
                 }
                 return this.value;
 

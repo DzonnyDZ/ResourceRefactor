@@ -215,6 +215,42 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
 
         #region Static Methods
 
+        /// <summary>
+        /// Returns an instance of BaseHardCodedString, based the type of the current document.
+        /// </summary>
+        /// <param name="currentDocument">The document that contains an hard-coded string.</param>
+        /// <returns>A hard coded string that is file type aware.</returns>
+        public static BaseHardCodedString GetHardCodedString(Document currentDocument) {
+            BaseHardCodedString stringInstance = null;
+
+            // Create the hard coded string instance
+            switch (currentDocument.Language) {
+                case "CSharp":
+                    stringInstance = new CSharpHardCodedString();
+                    break;
+                case "Basic":
+                    stringInstance = new VBHardCodedString();
+                    break;
+                case "XAML":
+                    stringInstance = new XamlHardCodedString();
+                    break;
+                case "HTML":
+                    if (currentDocument.Name.EndsWith(".cshtml", StringComparison.CurrentCultureIgnoreCase)) {
+                        stringInstance = new CSharpRazorHardCodedString();
+                    }
+                    else if (currentDocument.Name.EndsWith(".vbhtml", StringComparison.CurrentCultureIgnoreCase)) {
+                        stringInstance = new VBRazorHardCodedString();
+                    }
+                    else if (currentDocument.Name.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase) || currentDocument.Name.EndsWith(".ascx", StringComparison.CurrentCultureIgnoreCase) || currentDocument.Name.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase)) {
+                        stringInstance = new AspxHardCodedString();
+                    }
+                    break;
+            }
+            return stringInstance;
+
+        }
+
+
         /// <summary>Finds all instances of a text in the document object for the provided item.</summary>
         /// <param name="item">Project item to search texts</param>
         /// <param name="text">Text to look for</param>
@@ -227,19 +263,11 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             EditPoint end = null;
             // Unused object for FindPattern method.
             TextRanges ranges = null;
-            BaseHardCodedString instance = null;
             System.Collections.IEnumerator comments = null;
             Match currentMatch = null;
-            switch (item.Document.Language) {
-                case "CSharp":
-                    instance = new Common.CSharpHardCodedString();
-                    break;
-                case "Basic":
-                    instance = new Common.VBHardCodedString();
-                    break;
-                default:
-                    break;
-            }
+
+            BaseHardCodedString instance = BaseHardCodedString.GetHardCodedString(item.Document);
+
             while (start.FindPattern(text, (int)(vsFindOptions.vsFindOptionsMatchCase), ref end, ref ranges)) {
                 if (instance != null) {
                     if (comments == null) comments = instance.FindCommentsInDocument(item).GetEnumerator();
@@ -250,11 +278,11 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
                         if (currentMatch.Index + currentMatch.Length <= (start.AbsoluteCharOffset - 1)) {
                             currentMatch = null;
                         }
-                            // If this comment is later then current text stop processing comments
+                        // If this comment is later then current text stop processing comments
                         else if (currentMatch.Index >= (end.AbsoluteCharOffset - 1)) {
                             break;
                         }
-                            // At this point current text must be part of a comment block
+                        // At this point current text must be part of a comment block
                         else {
                             inComment = true;
                             break;

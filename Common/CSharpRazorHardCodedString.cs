@@ -26,7 +26,9 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// <param name="end">End offset of the string</param>
         /// <returns>A new instance of <see cref="CSharpRazorHardCodedString"/>.</returns>
         public override BaseHardCodedString CreateInstance(ProjectItem parent, int start, int end) {
-            return new CSharpRazorHardCodedString(parent, start, end);
+            CSharpRazorHardCodedString newInstance = new CSharpRazorHardCodedString(parent, start, end);
+            newInstance.InitializeValue();
+            return newInstance;
         }
 
         /// <summary>Gets the regular expression to identify strings</summary>
@@ -41,23 +43,28 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
         /// <summary>Is Razor prefix required?</summary>
         private bool needsRazorPrefix = false;
 
+        private void InitializeValue() {
+            this.value = this.BeginEditPoint.GetText(this.TextLength);
+            if (this.value.StartsWith("@")) {
+                //Verbatim string
+                this.value = value.Substring(2, value.Length - 3).Replace("\"\"", "\"");
+            }
+            else if (this.value.StartsWith("\"")) {
+                // String in quotes.
+                this.value = value.Substring(1, value.Length - 2);
+                value = Regex.Unescape(value);
+            }
+            else {
+                // String in html tags.
+                this.value = value.Trim();
+                this.needsRazorPrefix = true;
+            }
+        }
         /// <summary>Gets string representation of the literal, this would be the value to be placed in to resource files.</summary>
         public override string Value {
             get {
                 if (this.value == null) {
-                    this.value = this.BeginEditPoint.GetText(this.TextLength);
-                    if (this.value.StartsWith("@")) {
-                        //Verbatim string
-                        this.value = value.Substring(2, value.Length - 3).Replace("\"\"", "\"");
-                    } else if (this.value.StartsWith("\"")) {
-                        // String in quotes.
-                        this.value = value.Substring(1, value.Length - 2);
-                        value = Regex.Unescape(value);
-                    } else {
-                        // String in html tags.
-                        this.value = value.Trim();
-                        this.needsRazorPrefix = true;
-                    }
+                    InitializeValue();
                 }
                 return this.value;
 
