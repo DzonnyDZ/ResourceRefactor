@@ -37,7 +37,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
             }
             string namespacePrefix = GetNamespacePrefix(file);
             if (!file.IsDefaultResXFile()) {
-                namespacePrefix += Path.GetFileNameWithoutExtension(file.DisplayName).Replace(' ', '_') + ".";
+                namespacePrefix += Path.GetFileNameWithoutExtension(file.ShortFileName).Replace(' ', '_') + ".";
             }
             string reference = namespacePrefix + resourceName.Replace(' ', '_');
             return reference;

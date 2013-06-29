@@ -54,7 +54,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
                 throw new ArgumentException(Strings.InvalidResourceName, "resourceName");
             }
             string namespacePrefix = this.GetNamespacePrefix(file);
-            string reference = namespacePrefix + Path.GetFileNameWithoutExtension(file.DisplayName).Replace(' ', '_') + "."
+            string reference = namespacePrefix + Path.GetFileNameWithoutExtension(file.ShortFileName).Replace(' ', '_') + "."
                              + resourceName.Replace(' ', '_');
             return reference;
         }
