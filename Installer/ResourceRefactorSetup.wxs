@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
     <Product Name='Visual Studio Resource Refactoring Tool' Id='B5F6D97D-96DF-42b5-B2BD-0379B6AFAFE0'
-             Language='1033' Codepage='1252' Version='3.0.0' Manufacturer='Microsoft Corporation / ?onny'
+             Language='1033' Codepage='1252' Version='3.1.0' Manufacturer='Microsoft Corporation / ?onny'
              UpgradeCode='0056A67A-E37F-411d-858C-9058AF1C400E'>
 
         <Package Id='*'
                  Keywords='Installer'
-                 Comments='Resource Refactoring Tool for Visual Studio 2010/12 allows developers to easily convert string literals in to resources.'
+                 Comments='Resource Refactoring Tool for Visual Studio 2010/12/13 allows developers to easily convert string literals in to resources.'
                  Manufacturer='Microsoft Corporation'
                  InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
 
         <Upgrade Id='0056A67A-E37F-411d-858C-9058AF1C400E'>
-            <UpgradeVersion Minimum="3.0.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
-            <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="3.0.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+            <UpgradeVersion Minimum="3.1.0" OnlyDetect="yes" Property="NEWVERSIONDETECTED" IncludeMinimum="no"/>
+            <UpgradeVersion Minimum="0.8.0" IncludeMinimum="yes" Maximum="3.1.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
         </Upgrade>
 
         <!--
@@ -42,12 +42,16 @@
             <RegistrySearch Id="VS2012Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\11.0" Name="ApplicationID" />
         </Property>
 
+        <Property Id="VS2013">
+            <RegistrySearch Id="VS2013Registry" Type="raw" Root="HKLM" Key="Software\Microsoft\VisualStudio\12.0" Name="ApplicationID" />
+        </Property>
+
       <Property Id="BROWSERLOC">
             <RegistrySearch Id='DefaultBrowser' Type='raw' Root='HKCR' Key='http\shell\open\command' />
         </Property>
 
         <Condition Message="Resource Refactoring Tool requires Visual Studio 2005/8/10/12, which is not present on the computer.">
-          VS2010 = "VisualStudio" OR VS2012 = "VisualStudio"
+            VS2010 = "VisualStudio" OR VS2012 = "VisualStudio" OR VS2013 = "VisualStudio"
         </Condition>
 
         <Media Id='1' Cabinet='ResourceRefactor.cab' EmbedCab='yes' />
