@@ -17,8 +17,8 @@ End Enum
 
 ''' <summary>Contains common methods related to <see cref="EnvDTE"/></summary>
 Public NotInheritable Class ExtensibilityMethods
-    ''' <summary>Hides the default constructor and makes static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Hides the default constructor and makes "static" class</summary>
+    Private Sub New()
     End Sub
 
     ''' <summary>Check outs a project item if it is under source control and not checked out.</summary>

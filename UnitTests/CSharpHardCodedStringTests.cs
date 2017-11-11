@@ -206,7 +206,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// <summary>
         /// Sets up the DTE object by creating an instance of Visual Studio
         /// </summary>
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void FixtureSetup()
         {
             this.extensibility = SharedEnvironment.Instance;

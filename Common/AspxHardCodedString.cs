@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Configuration;
-using System.Web.WebPages.Razor.Configuration;
 using EnvDTE;
 
-namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
+namespace Microsoft.VSPowerToys.ResourceRefactor.Common
+{
 
     /// <summary>An implementation of <see cref="BaseHardCodedString"/> for ASPX (ASCX and MASTER) files.</summary>
     public class AspxHardCodedString : BaseHardCodedString {

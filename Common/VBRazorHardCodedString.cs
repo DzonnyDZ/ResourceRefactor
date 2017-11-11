@@ -7,7 +7,8 @@ using System.Web.Configuration;
 using System.Web.WebPages.Razor.Configuration;
 using EnvDTE;
 
-namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
+namespace Microsoft.VSPowerToys.ResourceRefactor.Common
+{
     /// <summary>An implementation of <see cref="BaseHardCodedString"/> for vbhtml (Razor) files.</summary>
     public class VBRazorHardCodedString : VBHardCodedString {
         /// <summary>Default constructor - creates a new instance of the <see cref="VBRazorHardCodedString"/> class</summary>

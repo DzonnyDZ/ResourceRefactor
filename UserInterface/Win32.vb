@@ -72,7 +72,7 @@ End Structure
 NotInheritable Class NativeMethods
 
     ''' <summary>Hiding the default constructor</summary>
-    Partial Private Sub New()
+    Private Sub New()
     End Sub
 
     ''' <summary><see cref="SendMessage"/> wrapper for using with <see cref="PARAFORMAT2"/> structure</summary>

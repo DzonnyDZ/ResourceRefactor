@@ -23,7 +23,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// <summary>
         /// Sets up the DTE object by creating an instance of Visual Studio
         /// </summary>
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void FixtureSetup()
         {
             this.extensibility = SharedEnvironment.Instance;
@@ -49,29 +49,31 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// Tests the Replace method when the file is read only
         /// </summary>
         [Test]
-        [ExpectedException(typeof(Common.FileReadOnlyException))]
         public void GenericCSharpReplaceMethodReadOnlyTest()
         {
-            // Get Project object
-            Project testProject = (Project)(extensibility.Solution.Projects.Item(3));
-            ProjectItem codeFile = testProject.ProjectItems.Item("Program.cs");
-            CSharpHardCodedString hcs = new CSharpHardCodedString(codeFile, 19, 32);
-            IExtractResourceAction actionObject = new Common.GenericCSharpExtractResourceAction();
-            ResourceFileCollection resources = new ResourceFileCollection(testProject, new FilterMethod(actionObject.IsValidResourceFile));
+            Assert.Throws<FileReadOnlyException>(() =>
+            {
+                // Get Project object
+                Project testProject = (Project)(extensibility.Solution.Projects.Item(3));
+                ProjectItem codeFile = testProject.ProjectItems.Item("Program.cs");
+                CSharpHardCodedString hcs = new CSharpHardCodedString(codeFile, 19, 32);
+                IExtractResourceAction actionObject = new Common.GenericCSharpExtractResourceAction();
+                ResourceFileCollection resources = new ResourceFileCollection(testProject, new FilterMethod(actionObject.IsValidResourceFile));
 
-            ResourceFile resFile = resources["Resource1.resx"];
-            string fileName = codeFile.get_FileNames(1);
-            FileAttributes oldAttributes = System.IO.File.GetAttributes(fileName);
-            System.IO.File.SetAttributes(fileName, oldAttributes | FileAttributes.ReadOnly);
-            try
-            {
-                ExtractToResourceActionSite refactorSite = new ExtractToResourceActionSite(hcs);
-                refactorSite.ExtractStringToResource(resFile, "Test");
-            }
-            finally
-            {
-                System.IO.File.SetAttributes(fileName, oldAttributes);
-            }
+                ResourceFile resFile = resources["Resource1.resx"];
+                string fileName = codeFile.get_FileNames(1);
+                FileAttributes oldAttributes = System.IO.File.GetAttributes(fileName);
+                System.IO.File.SetAttributes(fileName, oldAttributes | FileAttributes.ReadOnly);
+                try
+                {
+                    ExtractToResourceActionSite refactorSite = new ExtractToResourceActionSite(hcs);
+                    refactorSite.ExtractStringToResource(resFile, "Test");
+                }
+                finally
+                {
+                    System.IO.File.SetAttributes(fileName, oldAttributes);
+                }
+            });
         }
 
         #endregion
@@ -173,7 +175,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// <summary>
         /// Sets up the DTE object by creating an instance of Visual Studio
         /// </summary>
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void FixtureSetup()
         {
             this.environment = new SharedEnvironment();
@@ -189,7 +191,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// <summary>
         /// Closes the instance of Visual Studio created during the test
         /// </summary>
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void FixtureTearDown()
         {
             if (this.environment != null)

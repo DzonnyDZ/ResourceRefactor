@@ -22,7 +22,7 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// <summary>
         /// Sets up the DTE object by creating an instance of Visual Studio
         /// </summary>
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void FixtureSetup()
         {
             extensibility = SharedEnvironment.Instance;
@@ -204,15 +204,17 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// with the same name
         /// </summary>
         [Test]
-        [ExpectedException("System.ArgumentException")]
         public void ResourceFileMultipleAddsSameName()
         {
-            Project testProject = (Project)(extensibility.Solution.Projects.Item(1));
-            IExtractResourceAction action = new GenericCSharpExtractResourceAction();
-            ResourceFileCollection collection = new ResourceFileCollection(testProject, new FilterMethod(action.IsValidResourceFile));
-            ResourceFile testFile = collection[0];
-            testFile.AddResource("Test2", "Test3", "Comment Test");
-            testFile.AddResource("Test2", "TestTest", "Comment");
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Project testProject = (Project)(extensibility.Solution.Projects.Item(1));
+                IExtractResourceAction action = new GenericCSharpExtractResourceAction();
+                ResourceFileCollection collection = new ResourceFileCollection(testProject, new FilterMethod(action.IsValidResourceFile));
+                ResourceFile testFile = collection[0];
+                testFile.AddResource("Test2", "Test3", "Comment Test");
+                testFile.AddResource("Test2", "TestTest", "Comment");
+            });
         }
 
         /// <summary>
@@ -220,15 +222,17 @@ namespace Microsoft.VSPowerToys.ResourceRefactor.UnitTests
         /// with the same name but with case difference
         /// </summary>
         [Test]
-        [ExpectedException("System.ArgumentException")]
         public void ResourceFileMultipleAddsCaseDifference()
         {
-            Project testProject = (Project)(extensibility.Solution.Projects.Item(1));
-            IExtractResourceAction action = new GenericCSharpExtractResourceAction();
-            ResourceFileCollection collection = new ResourceFileCollection(testProject, new FilterMethod(action.IsValidResourceFile));
-            ResourceFile testFile = collection[0];
-            testFile.AddResource("Test2", "Test3", "Comment Test");
-            testFile.AddResource("test2", "TestTest", "Comment");
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Project testProject = (Project)(extensibility.Solution.Projects.Item(1));
+                IExtractResourceAction action = new GenericCSharpExtractResourceAction();
+                ResourceFileCollection collection = new ResourceFileCollection(testProject, new FilterMethod(action.IsValidResourceFile));
+                ResourceFile testFile = collection[0];
+                testFile.AddResource("Test2", "Test3", "Comment Test");
+                testFile.AddResource("test2", "TestTest", "Comment");
+            });
         }
 
         /// <summary>

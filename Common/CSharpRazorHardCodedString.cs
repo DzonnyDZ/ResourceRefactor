@@ -7,7 +7,8 @@ using System.Web.Configuration;
 using System.Web.WebPages.Razor.Configuration;
 using EnvDTE;
 
-namespace Microsoft.VSPowerToys.ResourceRefactor.Common {
+namespace Microsoft.VSPowerToys.ResourceRefactor.Common
+{
     /// <summary>An implementation of <see cref="BaseHardCodedString"/> interface for cshtml (Razor) files.</summary>
     public class CSharpRazorHardCodedString : CSharpHardCodedString {
         /// <summary>CTor - creates a new instance of the <see cref="CSharpRazorHardCodedString"/> class</summary>

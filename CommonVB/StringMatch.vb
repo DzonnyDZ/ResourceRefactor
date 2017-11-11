@@ -12,7 +12,7 @@ Public NotInheritable Class StringMatch
     Private Const ExactMatchDiffersByCase As Double = 0.95
 
     ''' <summary>Private constructor to avoid any public constructors</summary>
-    Partial Private Sub New()
+    Private Sub New()
     End Sub
 
     ''' <summary>Calculates a match value for two strings (using Levinsthein algorithm)</summary>
@@ -86,9 +86,9 @@ Public NotInheritable Class StringMatch
     End Function
 
     ''' <summary>Returns the minimum of 3 numbers</summary>
-    ''' <param name="d1">An <paramref name="integer"/> number</param>
-    ''' <param name="d2">An <paramref name="integer"/> number</param>
-    ''' <param name="d3">An <paramref name="integer"/> number</param>
+    ''' <param name="d1">An <see cref="Integer"/> number</param>
+    ''' <param name="d2">An <see cref="Integer"/> number</param>
+    ''' <param name="d3">An <see cref="Integer"/> number</param>
     ''' <returns>Minimum of <paramref name="d1"/>, <paramref name="d2"/> and <paramref name="d3"/></returns>
     Private Shared Function Min(ByVal d1 As Integer, ByVal d2 As Integer, ByVal d3 As Integer) As Integer
         If d1 <= d2 And d1 <= d3 Then
